@@ -3,69 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DAILYMOON - 1000+ Movies & Web Series</title>
+  <title>DAILYMOON – Free Movies & Web Series</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{background:#0a0a0a;color:#e5e5e5;font-family:system-ui;padding:20px}
-    h1{text-align:center;margin:20px 0;color:#0ff;font-size:2.5rem}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;max-width:1400px;margin:0 auto}
-    .card{background:#1a1a1a;border-radius:16px;overflow:hidden;cursor:pointer;transition:0.2s}
-    .card:hover{transform:scale(1.02);border:1px solid #0ff}
+    body{background:#0a0a0a;color:#fff;font-family:system-ui}
+    header{background:#111;padding:15px 20px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+    .logo{font-size:1.8rem;font-weight:bold;background:linear-gradient(135deg,#0ff,#f0f);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .search input{background:#222;border:none;padding:10px 20px;border-radius:30px;color:#fff;width:250px}
+    .nav{display:flex;gap:20px;margin:20px;flex-wrap:wrap}
+    .nav a{color:#0ff;text-decoration:none}
+    .categories{display:flex;gap:15px;overflow-x:auto;padding:10px 20px;margin-bottom:20px}
+    .cat{background:#222;padding:8px 20px;border-radius:30px;cursor:pointer;white-space:nowrap}
+    .cat.active{background:#0ff;color:#000}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:25px;padding:0 20px}
+    .card{background:#111;border-radius:16px;overflow:hidden;cursor:pointer;transition:0.2s}
+    .card:hover{transform:translateY(-6px);box-shadow:0 0 20px rgba(0,255,255,0.3)}
     .card img{width:100%;aspect-ratio:16/9;object-fit:cover}
-    .title{padding:10px;font-size:0.8rem;text-align:center}
-    footer{text-align:center;margin-top:40px;padding:20px;color:#666}
-    .load-more-btn{display:block;width:200px;margin:30px auto;background:#0ff;color:#000;text-align:center;padding:12px;border-radius:40px;cursor:pointer}
-    .nav-links{display:flex;justify-content:center;gap:20px;margin:20px 0}
-    .nav-links a{color:#0ff;text-decoration:none}
+    .card .title{padding:12px;font-size:0.9rem;text-align:center}
+    .load-more{text-align:center;margin:40px}
+    .load-more button{background:#0ff;color:#000;border:none;padding:12px 30px;border-radius:40px;font-size:1rem;cursor:pointer}
+    footer{text-align:center;padding:30px;color:#666}
   </style>
 </head>
 <body>
-<h1>🌙 DAILYMOON</h1>
-<div class="nav-links">
-  <a href="/">Home</a>
-  <a href="/about.html">About</a>
-  <a href="/dmca.html">DMCA</a>
-  <a href="/security.html">Security</a>
+<header>
+  <div class="logo">🌙 DAILYMOON</div>
+  <div class="search"><input type="text" id="search" placeholder="Search movies..."></div>
+</header>
+<div class="nav">
+  <a href="/">Home</a> <a href="/trending">Trending</a> <a href="/latest">Latest</a> <a href="/about">About</a> <a href="/dmca">DMCA</a>
 </div>
-<div class="grid" id="movieGrid"></div>
-<div class="load-more-btn" id="loadMoreBtn">Load More</div>
-<footer>© DAILYMOON - Daily fresh content | Auto-sync every 12h</footer>
-
+<div class="categories" id="categories"></div>
+<div class="grid" id="grid"></div>
+<div class="load-more"><button id="loadMore">Load More</button></div>
+<footer>© DAILYMOON – Your free movie destination. All videos are embedded from Dailymotion.</footer>
 <script>
   let allMovies = [];
-  let visibleCount = 20;
-  
-  async function loadMovies() {
-    // सभी movie folders की list fetch करने के लिए हमें एक JSON file चाहिए।
-    // चूँकि हमारे पास server-side नहीं है, हम एक static JSON बनाएँगे।
-    // नीचे हम generateMoviesJson() को अलग से run करेंगे।
+  let filteredMovies = [];
+  let visible = 24;
+  let activeCat = "all";
+  async function load() {
     const res = await fetch('/movies.json');
     allMovies = await res.json();
-    renderMovies();
+    filteredMovies = allMovies;
+    renderCats();
+    render();
   }
-  
-  function renderMovies() {
-    const grid = document.getElementById('movieGrid');
-    const toShow = allMovies.slice(0, visibleCount);
-    grid.innerHTML = toShow.map(m => `
-      <div class="card" onclick="location.href='/movie/${m.id}/'">
-        <img src="${m.thumbnail}" loading="lazy">
-        <div class="title">${escapeHtml(m.title)}</div>
-      </div>
-    `).join('');
-    document.getElementById('loadMoreBtn').style.display = visibleCount >= allMovies.length ? 'none' : 'block';
+  function renderCats() {
+    const cats = ["all", ...new Set(allMovies.map(m => m.category))];
+    const container = document.getElementById('categories');
+    container.innerHTML = cats.map(c => `<div class="cat ${c === activeCat ? 'active' : ''}" data-cat="${c}">${c.toUpperCase()}</div>`).join('');
+    document.querySelectorAll('.cat').forEach(btn => btn.onclick = () => {
+      activeCat = btn.dataset.cat;
+      renderCats();
+      filter();
+    });
   }
-  
-  function escapeHtml(str) {
-    return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
+  function filter() {
+    const term = document.getElementById('search').value.toLowerCase();
+    filteredMovies = allMovies.filter(m => (activeCat === "all" || m.category === activeCat) && m.title.toLowerCase().includes(term));
+    visible = 24;
+    render();
   }
-  
-  document.getElementById('loadMoreBtn').addEventListener('click', () => {
-    visibleCount += 20;
-    renderMovies();
-  });
-  
-  loadMovies();
+  function render() {
+    const grid = document.getElementById('grid');
+    const toShow = filteredMovies.slice(0, visible);
+    grid.innerHTML = toShow.map(m => `<div class="card" onclick="location.href='/movie/${m.id}/'"><img src="${m.thumb}" loading="lazy"><div class="title">${escapeHtml(m.title)}</div></div>`).join('');
+    document.getElementById('loadMore').style.display = visible >= filteredMovies.length ? 'none' : 'block';
+  }
+  function escapeHtml(s) { return s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); }
+  document.getElementById('search').addEventListener('input', () => filter());
+  document.getElementById('loadMore').onclick = () => { visible += 24; render(); };
+  load();
 </script>
 </body>
 </html>
