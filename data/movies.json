@@ -1,0 +1,37 @@
+[
+  {
+    "id": "masters-of-universe",
+    "title": "मार्टर्स ऑफ़ द यूनिवर्स",
+    "title_en": "Masters of the Universe",
+    "year": 2026,
+    "release_date": "2026-06-03",
+    "duration": "141 min",
+    "rating": 8.7,
+    "votes": 17,
+    "price": 77,
+    "genres": ["Action", "Fantasy", "Science Fiction"],
+    "synopsis": "After being separated for 15 years, the Sword of Power leads Prince Adam back to Eternia, where he discovers his home shattered under the fiendish rule of Skeletor. To save his family and his world, Adam must join forces with his closest allies, Teela and Duncan/Man-At-Arms, and embrace his true destiny as He-Man — the most powerful man in the universe.",
+    "poster": "https://image.tmdb.org/t/p/w500/8c4a8s5d6f7g8h9j0k1l2m3n4o5p6q7r.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/8c4a8s5d6f7g8h9j0k1l2m3n4o5p6q7r.jpg",
+    "trailer": "x9tr0em",
+    "servers": [
+      {"name": "S1", "url": "https://embed.su/embed/tebie/movie/masters-of-the-universe-2026"},
+      {"name": "S2", "url": "https://vidsrc.com/embed/x9tr0em"},
+      {"name": "S3", "url": "https://www.2embed.cc/embed/masters-of-the-universe"},
+      {"name": "S4", "url": "https://multiembed.mov/?video_id=x9tr0em"},
+      {"name": "S5", "url": "https://vidsrc.cc/v2/embed/movie/masters-of-the-universe"},
+      {"name": "S6", "url": "https://moviesapi.club/movie/masters-of-the-universe"},
+      {"name": "S7", "url": "https://autoembed.co/movie/masters-of-the-universe"},
+      {"name": "S8", "url": "https://smashystream.com/movie/masters-of-the-universe"},
+      {"name": "S9", "url": "https://vidlink.pro/movie/masters-of-the-universe"},
+      {"name": "S10", "url": "https://vidsrc.cc/v2/embed/movie/masters-of-the-universe-2026"}
+    ],
+    "cast": [
+      {"name": "Nicholas Galitzine", "role": "Prince Adam / He-Man"},
+      {"name": "Camila Mendes", "role": "Teela"},
+      {"name": "Idris Elba", "role": "Duncan / Man-At-Arms"},
+      {"name": "Jared Leto", "role": "Skeletor"},
+      {"name": "Allison Brie", "role": "Evil-Lyn"}
+    ]
+  }
+]
