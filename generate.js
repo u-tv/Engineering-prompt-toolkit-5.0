@@ -1,10 +1,6 @@
 const fs = require('fs');
-const https = require('https');
+const SITE_URL = "https://u-tv.github.io/dailymoon.github.io";   // ✅ ये तुम्हारा असली URL है
 
-const DM_USER = "dhamtan";
-const SITE_URL = "https://dailymoon.pages.dev";
-
-// 1000+ PREMIUM MOVIES & WEB SERIES (superhit + new + daily auto-sync ke liye base)
 const PREMIUM_VIDEOS = [
   { id: "x9tr0em", title: "Fight Club", thumbnail: "https://img.youtube.com/vi/SUXWAEX2jlg/maxresdefault.jpg", description: "An insomniac office worker forms an underground fight club." },
   { id: "x9u5obe", title: "Inception", thumbnail: "https://img.youtube.com/vi/YoHD9XEInc0/maxresdefault.jpg", description: "Dream-sharing technology to plant an idea." },
@@ -18,23 +14,19 @@ const PREMIUM_VIDEOS = [
   { id: "xab8u9r", title: "The Godfather", thumbnail: "https://img.youtube.com/vi/UaVTIH8mujA/maxresdefault.jpg", description: "The aging patriarch of an organized crime dynasty." }
 ];
 
-// Generate 1000+ movies (repeat with variations)
+// Flat list बनाओ – original array को mutate mat karo
+let allVideos = [];
 for (let i = 0; i < 100; i++) {
-  for (let j = 0; j < PREMIUM_VIDEOS.length; j++) {
-    const v = PREMIUM_VIDEOS[j];
-    const newId = `${v.id}_${i}`;
-    PREMIUM_VIDEOS.push({
-      id: newId,
+  for (const v of PREMIUM_VIDEOS) {
+    allVideos.push({
+      id: `${v.id}_${i}`,
       title: `${v.title} ${i+1}`,
       thumbnail: v.thumbnail,
       description: v.description
     });
-    if (PREMIUM_VIDEOS.length >= 1000) break;
   }
-  if (PREMIUM_VIDEOS.length >= 1000) break;
 }
-
-const videos = PREMIUM_VIDEOS.slice(0, 1000);
+const videos = allVideos; // 1000 movies
 
 function escapeHtml(str) {
   if (!str) return '';
@@ -42,10 +34,9 @@ function escapeHtml(str) {
 }
 
 async function main() {
-  console.log('🚀 Generating 1000+ movie pages...');
-  
+  console.log('🚀 Generating 1000 flat movie pages...');
   if (!fs.existsSync('./movie')) fs.mkdirSync('./movie');
-  
+
   for (const v of videos) {
     const dir = `./movie/${v.id}`;
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -79,13 +70,14 @@ async function main() {
 </html>`;
     fs.writeFileSync(`${dir}/index.html`, html);
   }
-  console.log(`✅ Generated ${videos.length} movie pages`);
+  console.log(`✅ Generated ${videos.length} movie pages (flat folders)`);
 
+  // Homepage – सारी 1000 movies दिखाएगा
   let cards = '';
-  for (const v of videos.slice(0, 100)) {
+  for (const v of videos) {
     cards += `<div class="card" onclick="location.href='/movie/${v.id}/'"><img src="${v.thumbnail}" loading="lazy"><div class="title">${escapeHtml(v.title)}</div></div>`;
   }
-  
+
   const homepage = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,19 +100,20 @@ async function main() {
 <h1>🌙 DAILYMOON</h1>
 <p style="text-align:center;margin-bottom:20px">1000+ movies & web series • Auto-sync daily</p>
 <div class="grid">${cards}</div>
-<footer>© DAILYMOON - Daily fresh content | Auto-sync every 12 hours</footer>
+<footer>© DAILYMOON - Daily fresh content</footer>
 </body>
 </html>`;
   fs.writeFileSync('./index.html', homepage);
-  
+
+  // Sitemap – सभी 1000 URLs
   let sitemapUrls = `<url><loc>${SITE_URL}/</loc><lastmod>${new Date().toISOString().split('T')[0]}</lastmod><priority>1.0</priority></url>`;
-  for (const v of videos.slice(0, 500)) {
+  for (const v of videos) {
     sitemapUrls += `<url><loc>${SITE_URL}/movie/${v.id}/</loc><priority>0.8</priority></url>`;
   }
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemapUrls}</urlset>`;
   fs.writeFileSync('./sitemap.xml', sitemap);
   fs.writeFileSync('./robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml`);
-  
-  console.log('🎉 Done! 1000+ pages ready.');
+
+  console.log('🎉 Done! 1000 flat folders, full sitemap, all movies on homepage.');
 }
 main().catch(console.error);
