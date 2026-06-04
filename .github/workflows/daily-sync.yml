@@ -1,25 +1,35 @@
 name: Daily Dailymotion Auto-Sync
+
 on:
   schedule:
     - cron: '0 */12 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+
       - name: Run Dailymotion Sync
         env:
           DAILYMOTION_CLIENT_ID: ${{ secrets.DAILYMOTION_CLIENT_ID }}
           DAILYMOTION_CLIENT_SECRET: ${{ secrets.DAILYMOTION_CLIENT_SECRET }}
         run: node sync.js
+
       - name: Commit and Push Changes
         run: |
           git config user.name "Auto-Sync Bot"
           git config user.email "bot@dailymoon.com"
           git add movie/ movies.json sitemap.xml robots.txt
           git commit -m "🤖 Auto-sync: added latest Dailymotion videos" || exit 0
-          git push origin main
+          git push origin HEAD:main
