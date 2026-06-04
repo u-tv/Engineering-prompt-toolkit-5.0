@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dailymoon.pages.dev/sitemap.xml
