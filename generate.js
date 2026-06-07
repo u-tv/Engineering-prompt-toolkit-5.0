@@ -1,180 +1,177 @@
 const fs = require('fs');
-const SITE_URL = "https://u-tv.github.io/dailymoon.github.io";
+const path = require('path');
 
-// REAL Dailymotion videos (100 unique IDs from trending)
-const VIDEOS = [
-  { id: "x9tr0em", title: "Fight Club", category: "Action", thumb: "https://img.youtube.com/vi/SUXWAEX2jlg/maxresdefault.jpg", desc: "An insomniac office worker forms an underground fight club." },
-  { id: "x9u5obe", title: "Inception", category: "Sci-Fi", thumb: "https://img.youtube.com/vi/YoHD9XEInc0/maxresdefault.jpg", desc: "Dream-sharing technology to plant an idea." },
-  { id: "x9usy48", title: "The Dark Knight", category: "Action", thumb: "https://img.youtube.com/vi/EXeTwQWrcwY/maxresdefault.jpg", desc: "Batman vs Joker in Gotham." },
-  { id: "x9usy9c", title: "Interstellar", category: "Sci-Fi", thumb: "https://img.youtube.com/vi/zSWdZVtXT7E/maxresdefault.jpg", desc: "A team of explorers travel through a wormhole." },
-  { id: "x9vs9pc", title: "The Matrix", category: "Action", thumb: "https://img.youtube.com/vi/vKQi3bBA1y8/maxresdefault.jpg", desc: "A computer hacker learns reality is a simulation." },
-  { id: "x9y6afu", title: "Pulp Fiction", category: "Crime", thumb: "https://img.youtube.com/vi/s7EdQ4FqbhY/maxresdefault.jpg", desc: "Interwoven stories of hitmen, a boxer, and criminals." },
-  { id: "xa2tqou", title: "Forrest Gump", category: "Drama", thumb: "https://img.youtube.com/vi/bLvqoHBptjg/maxresdefault.jpg", desc: "The life of an Alabama man with a low IQ." },
-  { id: "xa2tqzc", title: "Gladiator", category: "Action", thumb: "https://img.youtube.com/vi/owK1qxDselE/maxresdefault.jpg", desc: "A betrayed Roman general seeks revenge." },
-  { id: "xab8u8q", title: "The Shawshank Redemption", category: "Drama", thumb: "https://img.youtube.com/vi/6hB3S9bIaco/maxresdefault.jpg", desc: "Two imprisoned men bond over several years." },
-  { id: "xab8u9r", title: "The Godfather", category: "Crime", thumb: "https://img.youtube.com/vi/UaVTIH8mujA/maxresdefault.jpg", desc: "The aging patriarch of an organized crime dynasty." }
-];
+// ==================== CONFIG ====================
+const DAILYMOTION_API_KEY = process.env.DAILYMOTION_KEY || '656242f6bd70036a2064';
+const SITE_URL = 'https://dailymoon.pages.dev';
+const OUTPUT_DIR = './public';
 
-// Expand to 1000 videos (100 copies of each – but make them unique titles)
-let allVideos = [];
-for (let i = 1; i <= 100; i++) {
-  for (const v of VIDEOS) {
-    allVideos.push({
-      id: v.id,
-      folderId: `${v.id}_${i}`,
-      title: `${v.title} - Part ${i}`,
-      category: v.category,
-      thumb: v.thumb,
-      desc: v.desc
-    });
-  }
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
 }
-const MOVIES = allVideos.slice(0, 1000);
 
-function escape(str) { return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); }
+async function fetchDailymotionContent() {
+  console.log('📡 Accessing Dailymotion Secure API...');
+  
+  // मूवी कंटेंट निकालने के लिए रिफाइंड सर्च क्वेरी और पैरामीटर्स
+  const searchQueries = ['hindi full movie', 'bollywood superhit movie', 'new webseries clip'];
+  let allVideos = [];
 
-// Create movie pages (Dailymotion player)
-if (!fs.existsSync('./movie')) fs.mkdirSync('./movie');
-for (const m of MOVIES) {
-  const dir = `./movie/${m.folderId}`;
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  const related = MOVIES.filter(x => x.id !== m.id && x.category === m.category).slice(0, 6);
+  for (const query of searchQueries) {
+    const encodedQuery = encodeURIComponent(query);
+    const url = `https://api.dailymotion.com/videos?fields=id,title,description,thumbnail_720_url,views_total,duration&search=${encodedQuery}&tags=movie&limit=40`;
+    
+    try {
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+          'Authorization': `Bearer ${DAILYMOTION_API_KEY}`
+        }
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        if (data.list) {
+          // केवल वही वीडियो लें जो कम से कम 10 मिनट (600 सेकेंड) से ज्यादा बड़े हों, ताकि कचरा क्लिप्स न आएं
+          const longVideos = data.list.filter(v => v.duration > 600);
+          allVideos.push(...longVideos);
+        }
+      }
+    } catch (e) {
+      console.warn(`Query loop skipped for: ${query}`);
+    }
+  }
+
+  // डुप्लिकेट वीडियो हटाएं
+  const uniqueVideos = Array.from(new Map(allVideos.map(item => [item.id, item])).values());
+  return uniqueVideos.slice(0, 100); // शीर्ष 100 वीडियो सिलेक्ट करें
+}
+
+function generateVideoPage(video) {
+  const videoDir = path.join(OUTPUT_DIR, 'video', video.id);
+  if (!fs.existsSync(videoDir)) fs.mkdirSync(videoDir, { recursive: true });
+
+  const title = escapeHtml(video.title);
+  const desc = escapeHtml(video.description || 'Watch full movie online for free in high definition on DailyMoon.');
+  const thumb = video.thumbnail_720_url || 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500';
+  const durationMin = video.duration ? Math.floor(video.duration / 600) + ' hrs' : 'HD Movie';
+
   const html = `<!DOCTYPE html>
-<html lang="en">
+<html lang="hi-IN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escape(m.title)} | DAILYMOON</title>
-  <meta name="description" content="${escape(m.desc)}">
-  <link rel="canonical" href="${SITE_URL}/movie/${m.folderId}/">
+  <title>${title} - Free HD Stream | DailyMoon</title>
+  <meta name="description" content="Stream ${title} free online on DailyMoon. ${desc.slice(0, 140)}...">
+  <link rel="canonical" href="${SITE_URL}/video/${video.id}/">
+  <meta property="og:title" content="${title}">
+  <meta property="og:image" content="${thumb}">
+  <meta property="og:type" content="video.movie">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{background:#0a0a0a;color:#fff;font-family:system-ui;padding:20px}
-    .container{max-width:1200px;margin:0 auto}
-    .video-wrapper{position:relative;padding-bottom:56.25%;height:0;margin-bottom:20px}
-    iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:16px}
-    h1{font-size:1.8rem;margin:20px 0 10px;color:#0ff}
-    .meta{color:#aaa;margin-bottom:20px}
-    .related{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;margin-top:40px}
-    .related-card{background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer;transition:0.2s}
-    .related-card:hover{transform:scale(1.02);border:1px solid #0ff}
-    .related-card img{width:100%;aspect-ratio:16/9;object-fit:cover}
-    .related-title{padding:10px;font-size:0.8rem;text-align:center}
-    .back-btn{display:inline-block;background:#0ff;color:#000;padding:8px 20px;border-radius:30px;text-decoration:none;margin:20px 0}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #06070d; color: #e2e8f0; font-family: system-ui, sans-serif; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    .player-section { background: #121420; border-radius: 24px; padding: 20px; margin-top: 20px; border: 1px solid #1e2238; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; background: black; border-radius: 16px; overflow: hidden; }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    h1 { font-size: 1.8rem; margin: 25px 0 10px; color: #fff; line-height: 1.4; }
+    .meta { color: #00d2ff; font-weight: bold; font-size: 0.95rem; margin-bottom: 20px; }
+    .desc { line-height: 1.7; color: #cbd5e1; background: #121420; padding: 25px; border-radius: 16px; border: 1px solid #1e2238; }
+    .ad-container { text-align: center; margin: 25px 0; padding: 15px; background: #121420; border-radius: 16px; }
+    .smart-link { display: inline-block; background: #00d2ff; color: #06070d; padding: 12px 28px; border-radius: 40px; text-decoration: none; font-weight: bold; }
+    footer { text-align: center; padding: 30px; margin-top: 50px; border-top: 1px solid #1e2238; font-size: 0.85rem; color: #94a3b8; }
   </style>
 </head>
 <body>
 <div class="container">
-  <a href="/" class="back-btn">← Home</a>
-  <div class="video-wrapper"><iframe src="https://www.dailymotion.com/embed/video/${m.id}?autoplay=1" allowfullscreen></iframe></div>
-  <h1>${escape(m.title)}</h1>
-  <div class="meta">Category: ${m.category} | Views: 1.2M</div>
-  <p>${escape(m.desc)}</p>
-  <h3>Related Videos</h3>
-  <div class="related">
-    ${related.map(r => `<div class="related-card" onclick="location.href='/movie/${r.folderId}/'"><img src="${r.thumb}" loading="lazy"><div class="related-title">${escape(r.title)}</div></div>`).join('')}
+  <p><a href="/" style="color:#00d2ff; text-decoration:none; font-weight:bold; font-size:1.05rem;">← Back to DailyMoon</a></p>
+  
+  <div class="player-section">
+    <div class="video-container">
+      <iframe src="https://www.dailymotion.com/embed/video/${video.id}?autoplay=0&queue-enable=false" allowfullscreen allow="autoplay"></iframe>
+    </div>
+  </div>
+
+  <div class="ad-container">
+    <script async data-cfasync="false" src="https://pl28831952.effectivegatecpm.com/e1fcb13904d27c4fe4e794fb5b4db78d/invoke.js"></script>
+    <div id="container-e1fcb13904d27c4fe4e794fb5b4db78d"></div>
+  </div>
+
+  <h1>${title}</h1>
+  <div class="meta">👁️ ${video.views_total || 'N/A'} Views | Length: ${durationMin} | Premium Player</div>
+  
+  <p class="desc"><strong>Overview:</strong><br><br>${desc}</p>
+
+  <div class="ad-container">
+    <a class="smart-link" href="https://www.effectivegatecpm.com/sa8mca36sv?key=3711015d24018cf89ccb362976c4a2e0" target="_blank">⚡ High-Speed Direct Download Link</a>
   </div>
 </div>
+<footer><p>© DailyMoon | All Streams Sourced via Secure Provider</p></footer>
+<script src="https://pl28831952.effectivegatecpm.com/08/eb/75/08eb7538aa9646008f732c0721d2a5cc.js"></script>
 </body>
 </html>`;
-  fs.writeFileSync(`${dir}/index.html`, html);
+
+  fs.writeFileSync(path.join(videoDir, 'index.html'), html);
 }
-console.log(`✅ Generated ${MOVIES.length} movie pages with related videos`);
 
-// Create movies.json for homepage
-const moviesJson = MOVIES.map(m => ({ id: m.folderId, title: m.title, thumb: m.thumb, category: m.category }));
-fs.writeFileSync('movies.json', JSON.stringify(moviesJson));
+function updateHomepage(videos) {
+  const sourceIndex = path.join(process.cwd(), 'index.html');
+  if (!fs.existsSync(sourceIndex)) return;
+  let html = fs.readFileSync(sourceIndex, 'utf8');
 
-// Create homepage (Dailymotion clone style)
-const homepage = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DAILYMOON – Free Movies & Web Series</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{background:#0a0a0a;color:#fff;font-family:system-ui}
-    header{background:#111;padding:15px 20px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
-    .logo{font-size:1.8rem;font-weight:bold;background:linear-gradient(135deg,#0ff,#f0f);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .search input{background:#222;border:none;padding:10px 20px;border-radius:30px;color:#fff;width:250px}
-    .nav{display:flex;gap:20px;margin:20px;flex-wrap:wrap}
-    .nav a{color:#0ff;text-decoration:none}
-    .categories{display:flex;gap:15px;overflow-x:auto;padding:10px 20px;margin-bottom:20px}
-    .cat{background:#222;padding:8px 20px;border-radius:30px;cursor:pointer;white-space:nowrap}
-    .cat.active{background:#0ff;color:#000}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:25px;padding:0 20px}
-    .card{background:#111;border-radius:16px;overflow:hidden;cursor:pointer;transition:0.2s}
-    .card:hover{transform:translateY(-6px);box-shadow:0 0 20px rgba(0,255,255,0.3)}
-    .card img{width:100%;aspect-ratio:16/9;object-fit:cover}
-    .card .title{padding:12px;font-size:0.9rem;text-align:center}
-    .load-more{text-align:center;margin:40px}
-    .load-more button{background:#0ff;color:#000;border:none;padding:12px 30px;border-radius:40px;font-size:1rem;cursor:pointer}
-    footer{text-align:center;padding:30px;color:#666}
-  </style>
-</head>
-<body>
-<header>
-  <div class="logo">🌙 DAILYMOON</div>
-  <div class="search"><input type="text" id="search" placeholder="Search movies..."></div>
-</header>
-<div class="nav">
-  <a href="/">Home</a> <a href="/trending">Trending</a> <a href="/latest">Latest</a> <a href="/about">About</a> <a href="/dmca">DMCA</a>
-</div>
-<div class="categories" id="categories"></div>
-<div class="grid" id="grid"></div>
-<div class="load-more"><button id="loadMore">Load More</button></div>
-<footer>© DAILYMOON – Your free movie destination. All videos are embedded from Dailymotion.</footer>
-<script>
-  let allMovies = [];
-  let filteredMovies = [];
-  let visible = 24;
-  let activeCat = "all";
-  async function load() {
-    const res = await fetch('/movies.json');
-    allMovies = await res.json();
-    filteredMovies = allMovies;
-    renderCats();
-    render();
+  let cardsHtml = '';
+  for (const v of videos) {
+    const title = escapeHtml(v.title);
+    const thumb = v.thumbnail_720_url || 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500';
+    cardsHtml += `
+      <div class="movie-card" onclick="location.href='/video/${v.id}/'">
+        <div class="poster-wrapper">
+          <img src="${thumb}" alt="${title}" loading="lazy">
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">${title}</div>
+          <div class="movie-meta">👁️ ${v.views_total || '0'} views • Full HD</div>
+        </div>
+      </div>`;
   }
-  function renderCats() {
-    const cats = ["all", ...new Set(allMovies.map(m => m.category))];
-    const container = document.getElementById('categories');
-    container.innerHTML = cats.map(c => \`<div class="cat \${c === activeCat ? 'active' : ''}" data-cat="\${c}">\${c.toUpperCase()}</div>\`).join('');
-    document.querySelectorAll('.cat').forEach(btn => btn.onclick = () => {
-      activeCat = btn.dataset.cat;
-      renderCats();
-      filter();
-    });
-  }
-  function filter() {
-    const term = document.getElementById('search').value.toLowerCase();
-    filteredMovies = allMovies.filter(m => (activeCat === "all" || m.category === activeCat) && m.title.toLowerCase().includes(term));
-    visible = 24;
-    render();
-  }
-  function render() {
-    const grid = document.getElementById('grid');
-    const toShow = filteredMovies.slice(0, visible);
-    grid.innerHTML = toShow.map(m => \`<div class="card" onclick="location.href='/movie/\${m.id}/'"><img src="\${m.thumb}" loading="lazy"><div class="title">\${escapeHtml(m.title)}</div></div>\`).join('');
-    document.getElementById('loadMore').style.display = visible >= filteredMovies.length ? 'none' : 'block';
-  }
-  function escapeHtml(s) { return s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); }
-  document.getElementById('search').addEventListener('input', () => filter());
-  document.getElementById('loadMore').onclick = () => { visible += 24; render(); };
-  load();
-</script>
-</body>
-</html>`;
-fs.writeFileSync('index.html', homepage);
 
-// Extra static pages (About, DMCA)
-fs.writeFileSync('about.html', '<!DOCTYPE html><html><head><title>About</title><style>body{background:#0a0a0a;color:#fff;padding:40px}</style></head><body><h1>About DAILYMOON</h1><p>We bring you the best free movies from Dailymotion.</p><a href="/">Back</a></body></html>');
-fs.writeFileSync('dmca.html', '<!DOCTYPE html><html><head><title>DMCA</title><style>body{background:#0a0a0a;color:#fff;padding:40px}</style></head><body><h1>DMCA</h1><p>Contact: dmca@dailymoon.com</p><a href="/">Back</a></body></html>');
-fs.writeFileSync('security.html', '<!DOCTYPE html><html><head><title>Security</title><style>body{background:#0a0a0a;color:#fff;padding:40px}</style></head><body><h1>Security</h1><p>We use HTTPS and secure embeds.</p><a href="/">Back</a></body></html>');
-fs.writeFileSync('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml`);
-let sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${SITE_URL}/</loc></url>`;
-for (const m of MOVIES) sitemap += `<url><loc>${SITE_URL}/movie/${m.folderId}/</loc></url>`;
-sitemap += `</urlset>`;
-fs.writeFileSync('sitemap.xml', sitemap);
-console.log("🎉 DAILYMOON Dailymotion clone is ready! Zero dummy. Everything real.");
+  html = html.replace('<div id="moviesGrid" class="movie-grid"></div>', `<div id="moviesGrid" class="movie-grid">${cardsHtml}</div>`);
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), html);
+}
+
+function generateSitemap(videos) {
+  let urls = `<url><loc>${SITE_URL}/</loc><priority>1.0</priority></url>`;
+  for (const v of videos) urls += `<url><loc>${SITE_URL}/video/${v.id}/</loc><priority>0.8</priority></url>`;
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'sitemap.xml'), `<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`);
+}
+
+function copyRepoFiles(src, dest) {
+  if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+  for (const name of fs.readdirSync(src)) {
+    if (['.git', 'node_modules', 'public', '.github'].includes(name)) continue;
+    const sPath = path.join(src, name), dPath = path.join(dest, name);
+    if (fs.statSync(sPath).isDirectory()) copyRepoFiles(sPath, dPath);
+    else fs.copyFileSync(sPath, dPath);
+  }
+}
+
+(async () => {
+  console.log('🚀 Launching DailyMoon Engine...');
+  if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  copyRepoFiles(process.cwd(), OUTPUT_DIR);
+
+  try {
+    const videos = await fetchDailymotionContent();
+    console.log(`🎬 Compiling ${videos.length} safe high-quality streams...`);
+    for (const video of videos) {
+      generateVideoPage(video);
+    }
+    updateHomepage(videos);
+    generateSitemap(videos);
+    fs.writeFileSync(path.join(OUTPUT_DIR, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml`);
+    console.log('🎉 Execution successful. Content Synced.');
+  } catch (err) {
+    console.error(`❌ Process Interrupt: ${err.message}`);
+  }
+})();
