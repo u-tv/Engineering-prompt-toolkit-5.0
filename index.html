@@ -2,42 +2,51 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-<title>50 AI TOOL KIT — Prompt Engineering Toolkit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#09090b">
+<meta name="color-scheme" content="dark">
 
-<meta name="description" content="50 AI prompt engineering tools in one professional browser-based toolkit. Analyze, build, refine, test, optimize and format AI prompts.">
-<meta name="keywords" content="AI tools, prompt engineering, prompt analyzer, prompt generator, prompt builder, AI prompt toolkit, ChatGPT prompts, AI productivity tools">
-<meta name="author" content="U-TV">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#07070b">
-<meta name="application-name" content="50 AI TOOL KIT">
+<title>50 AI Prompt Engineering Tools | AI Tool Kit</title>
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="50 AI TOOL KIT — Prompt Engineering Toolkit">
-<meta property="og:description" content="50 standalone browser-based AI prompt engineering tools in one toolkit.">
-<meta property="og:url" content="https://u-tv.github.io/dailymoon.github.io/">
-<meta property="og:site_name" content="50 AI TOOL KIT">
+<meta name="description" content="Explore 50 browser-based AI prompt engineering tools for prompt analysis, persona building, prompt refinement, testing, formatting, research, marketing and professional content creation.">
+<meta name="keywords" content="AI prompt engineering tools, prompt analyzer, prompt generator, prompt optimizer, AI prompt toolkit">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="googlebot" content="index,follow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 
 <link rel="canonical" href="https://u-tv.github.io/dailymoon.github.io/">
 
+<meta property="og:type" content="website">
+<meta property="og:title" content="50 AI Prompt Engineering Tools">
+<meta property="og:description" content="A fast browser-based toolkit containing real prompt engineering utilities.">
+<meta property="og:url" content="https://u-tv.github.io/dailymoon.github.io/">
+<meta property="og:site_name" content="50 AI TOOL KIT">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="50 AI Prompt Engineering Tools">
+<meta name="twitter:description" content="Analyze, build, refine, test and format AI prompts with a professional browser-based toolkit.">
+
+<link rel="manifest" href="./manifest.webmanifest">
+
 <style>
 :root{
-    --bg:#050507;
-    --bg2:#0a0a10;
-    --card:rgba(20,20,28,.88);
-    --card2:rgba(30,30,40,.72);
-    --text:#f7f7fb;
-    --muted:#a5a5b4;
-    --purple:#8b5cf6;
-    --purple2:#a855f7;
-    --pink:#ec4899;
-    --cyan:#22d3ee;
-    --green:#22c55e;
-    --gold:#f59e0b;
-    --border:rgba(255,255,255,.09);
-    --shadow:0 18px 60px rgba(0,0,0,.45);
+    --bg:#050505;
+    --bg2:#0a0a0d;
+    --panel:rgba(18,18,22,.86);
+    --panel2:rgba(255,255,255,.055);
+    --border:rgba(255,255,255,.11);
+    --text:#fafafa;
+    --muted:#a1a1aa;
+    --pink:#ff2d8d;
+    --pink2:#ff65b0;
+    --green:#19e68c;
+    --green2:#7affc4;
+    --black:#09090b;
+    --white:#fff;
+    --shadow:0 20px 60px rgba(0,0,0,.45);
     --radius:24px;
+    --max:1500px;
 }
 
 *{
@@ -48,16 +57,16 @@
 
 html{
     scroll-behavior:smooth;
+    background:var(--bg);
 }
 
 body{
     min-height:100vh;
-    color:var(--text);
     background:
-        radial-gradient(circle at 15% 5%,rgba(139,92,246,.18),transparent 30%),
-        radial-gradient(circle at 85% 15%,rgba(236,72,153,.12),transparent 28%),
-        radial-gradient(circle at 50% 100%,rgba(34,211,238,.08),transparent 35%),
-        var(--bg);
+        radial-gradient(circle at 10% 0%,rgba(255,45,141,.12),transparent 28rem),
+        radial-gradient(circle at 90% 10%,rgba(25,230,140,.09),transparent 28rem),
+        linear-gradient(135deg,#030303,#0b0b0e 50%,#030303);
+    color:var(--text);
     font-family:
         Inter,
         ui-sans-serif,
@@ -69,47 +78,46 @@ body{
     overflow-x:hidden;
 }
 
-button,
-input,
-select{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
 a{
     color:inherit;
     text-decoration:none;
 }
 
-::selection{
-    background:rgba(139,92,246,.35);
+button,
+input{
+    font:inherit;
 }
 
-/* =========================
-   HEADER
-========================= */
+button{
+    border:0;
+}
 
-.header{
+::selection{
+    background:rgba(255,45,141,.35);
+    color:#fff;
+}
+
+.container{
+    width:min(calc(100% - 28px),var(--max));
+    margin:auto;
+}
+
+.topbar{
     position:sticky;
     top:0;
     z-index:1000;
     backdrop-filter:blur(22px);
     -webkit-backdrop-filter:blur(22px);
-    background:rgba(5,5,7,.78);
+    background:rgba(3,3,4,.78);
     border-bottom:1px solid var(--border);
 }
 
-.header-inner{
-    max-width:1400px;
-    margin:auto;
-    padding:14px 20px;
+.topbar-inner{
+    min-height:70px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:16px;
+    gap:18px;
 }
 
 .brand{
@@ -119,422 +127,532 @@ a{
     min-width:0;
 }
 
-.brand-icon{
-    width:48px;
-    height:48px;
-    border-radius:16px;
+.brand-mark{
+    width:44px;
+    height:44px;
+    flex:0 0 44px;
     display:grid;
     place-items:center;
-    flex:none;
-    font-size:24px;
+    border-radius:15px;
     background:
-        linear-gradient(135deg,#7c3aed,#ec4899);
+        linear-gradient(145deg,#ff2d8d,#0b0b0d 52%,#19e68c);
     box-shadow:
-        0 12px 35px rgba(139,92,246,.35),
-        inset 0 1px rgba(255,255,255,.3);
-}
-
-.brand-text{
-    min-width:0;
+        inset 0 1px 0 rgba(255,255,255,.4),
+        0 10px 30px rgba(255,45,141,.18);
+    font-size:20px;
+    font-weight:1000;
 }
 
 .brand-title{
+    font-weight:950;
+    letter-spacing:-.04em;
     font-size:18px;
-    font-weight:900;
-    letter-spacing:-.4px;
     white-space:nowrap;
 }
 
 .brand-sub{
     color:var(--muted);
-    font-size:12px;
+    font-size:11px;
     margin-top:2px;
-    white-space:nowrap;
 }
 
-.home-btn{
-    width:48px;
-    height:48px;
-    border-radius:16px;
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.mini-btn{
+    min-height:42px;
+    padding:0 15px;
     border:1px solid var(--border);
-    background:rgba(255,255,255,.035);
-    color:white;
-    display:grid;
-    place-items:center;
-    font-size:22px;
+    border-radius:999px;
+    color:#fff;
+    background:rgba(255,255,255,.055);
+    cursor:pointer;
     transition:.2s ease;
 }
 
-.home-btn:hover{
-    background:rgba(139,92,246,.18);
-    border-color:rgba(139,92,246,.45);
+.mini-btn:hover{
     transform:translateY(-2px);
+    border-color:rgba(255,45,141,.5);
+    background:rgba(255,45,141,.09);
 }
-
-/* =========================
-   HERO
-========================= */
 
 .hero{
-    max-width:1200px;
-    margin:0 auto;
-    padding:64px 20px 34px;
-    text-align:center;
+    padding:70px 0 38px;
 }
 
-.badge{
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.5fr .8fr;
+    gap:28px;
+    align-items:stretch;
+}
+
+.hero-main{
+    position:relative;
+    overflow:hidden;
+    padding:48px;
+    border:1px solid var(--border);
+    border-radius:32px;
+    background:
+        linear-gradient(135deg,
+            rgba(255,45,141,.10),
+            rgba(255,255,255,.035) 45%,
+            rgba(25,230,140,.08));
+    box-shadow:var(--shadow);
+}
+
+.hero-main::after{
+    content:"";
+    position:absolute;
+    width:320px;
+    height:320px;
+    right:-150px;
+    top:-150px;
+    border-radius:50%;
+    background:rgba(255,45,141,.14);
+    filter:blur(20px);
+    pointer-events:none;
+}
+
+.eyebrow{
     display:inline-flex;
     align-items:center;
     gap:8px;
-    padding:9px 15px;
-    border:1px solid rgba(139,92,246,.28);
+    padding:8px 13px;
+    border:1px solid rgba(255,255,255,.12);
     border-radius:999px;
-    background:rgba(139,92,246,.09);
-    color:#c4b5fd;
+    background:rgba(255,255,255,.045);
+    color:#ddd;
     font-size:12px;
     font-weight:800;
-    letter-spacing:.5px;
+    letter-spacing:.04em;
 }
 
 .hero h1{
+    position:relative;
+    z-index:1;
     margin-top:20px;
-    font-size:clamp(38px,7vw,78px);
-    line-height:.98;
-    letter-spacing:-3px;
-    font-weight:950;
+    max-width:900px;
+    font-size:clamp(40px,6vw,78px);
+    line-height:.94;
+    letter-spacing:-.065em;
+    font-weight:1000;
+}
+
+.gradient-text{
     background:
-        linear-gradient(
-            90deg,
-            #ffffff 0%,
-            #c4b5fd 35%,
-            #f0abfc 65%,
-            #ffffff 100%
-        );
+        linear-gradient(100deg,#fff 5%,#ff65b0 42%,#7affc4 88%);
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
 }
 
-.hero p{
+.hero-copy{
+    position:relative;
+    z-index:1;
+    margin-top:22px;
     max-width:760px;
-    margin:20px auto 0;
-    color:var(--muted);
-    font-size:16px;
-    line-height:1.7;
+    color:#b8b8c0;
+    font-size:17px;
+    line-height:1.75;
 }
 
-.stats{
+.hero-stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    max-width:700px;
-    margin:34px auto 0;
     gap:12px;
+    margin-top:30px;
 }
 
 .stat{
-    padding:18px 12px;
+    padding:18px;
     border:1px solid var(--border);
-    border-radius:18px;
-    background:rgba(255,255,255,.025);
+    border-radius:20px;
+    background:rgba(0,0,0,.28);
 }
 
 .stat strong{
     display:block;
-    font-size:24px;
+    font-size:25px;
+    font-weight:1000;
 }
 
 .stat span{
     display:block;
-    margin-top:4px;
+    margin-top:5px;
     color:var(--muted);
     font-size:11px;
-    font-weight:700;
 }
 
-/* =========================
-   CONTROLS
-========================= */
+.dashboard{
+    padding:28px;
+    border:1px solid var(--border);
+    border-radius:32px;
+    background:
+        linear-gradient(145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018));
+    box-shadow:var(--shadow);
+}
+
+.dashboard h2{
+    font-size:18px;
+    font-weight:950;
+}
+
+.dashboard p{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+}
+
+.progress{
+    height:10px;
+    margin:25px 0 16px;
+    border-radius:999px;
+    overflow:hidden;
+    background:#18181b;
+}
+
+.progress > span{
+    display:block;
+    height:100%;
+    width:0%;
+    border-radius:inherit;
+    background:linear-gradient(90deg,var(--pink),var(--green));
+    transition:width .4s ease;
+}
+
+.health{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    font-size:13px;
+}
+
+.health:last-child{
+    border-bottom:0;
+}
+
+.dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:7px;
+    background:var(--green);
+    box-shadow:0 0 14px rgba(25,230,140,.8);
+}
 
 .controls{
-    max-width:1200px;
-    margin:0 auto;
-    padding:10px 20px 28px;
+    position:sticky;
+    top:70px;
+    z-index:900;
+    padding:16px 0;
+    background:linear-gradient(
+        rgba(5,5,5,.96),
+        rgba(5,5,5,.82),
+        transparent
+    );
+    backdrop-filter:blur(10px);
 }
 
 .control-panel{
     display:flex;
-    gap:12px;
+    align-items:center;
+    gap:10px;
     flex-wrap:wrap;
 }
 
-.search-box{
-    flex:1 1 320px;
+.search{
     position:relative;
+    flex:1 1 340px;
 }
 
-.search-box input{
+.search input{
     width:100%;
-    height:58px;
-    padding:0 20px 0 52px;
+    min-height:52px;
+    padding:0 18px 0 48px;
     border:1px solid var(--border);
     border-radius:18px;
     outline:none;
-    color:white;
-    background:rgba(255,255,255,.045);
+    color:#fff;
+    background:rgba(255,255,255,.055);
     transition:.2s ease;
 }
 
-.search-box input:focus{
-    border-color:rgba(139,92,246,.7);
-    box-shadow:0 0 0 4px rgba(139,92,246,.1);
+.search input:focus{
+    border-color:rgba(255,45,141,.65);
+    box-shadow:0 0 0 4px rgba(255,45,141,.08);
 }
 
 .search-icon{
     position:absolute;
-    left:18px;
+    left:17px;
     top:50%;
     transform:translateY(-50%);
-    opacity:.6;
-    pointer-events:none;
+    color:#888;
 }
 
-.category{
-    min-width:210px;
-    height:58px;
-    padding:0 18px;
-    border:1px solid var(--border);
+.filter-btn{
+    min-height:52px;
+    padding:0 17px;
     border-radius:18px;
-    outline:none;
-    color:white;
-    background:#111117;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.05);
+    color:#ddd;
+    cursor:pointer;
 }
 
-.category option{
-    background:#111117;
-    color:white;
-}
-
-/* =========================
-   TOOL AREA
-========================= */
-
-.tools-wrap{
-    max-width:1400px;
-    margin:auto;
-    padding:0 20px 70px;
+.filter-btn.active{
+    color:#fff;
+    border-color:rgba(25,230,140,.45);
+    background:rgba(25,230,140,.09);
 }
 
 .section-head{
     display:flex;
+    align-items:end;
     justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    margin:12px 0 20px;
+    gap:20px;
+    margin:28px 0 18px;
 }
 
 .section-head h2{
-    font-size:25px;
-    letter-spacing:-.8px;
+    font-size:30px;
+    letter-spacing:-.04em;
+    font-weight:1000;
 }
 
-.result-count{
+.section-head p{
+    margin-top:5px;
     color:var(--muted);
     font-size:13px;
-    font-weight:700;
 }
 
-.tools-grid{
+.tool-grid{
     display:grid;
-    grid-template-columns:
-        repeat(auto-fill,minmax(280px,1fr));
+    grid-template-columns:repeat(4,minmax(0,1fr));
     gap:18px;
+    padding-bottom:80px;
 }
-
-/* =========================
-   TOOL CARD
-========================= */
 
 .tool-card{
     position:relative;
-    min-height:285px;
-    padding:22px;
+    min-width:0;
+    padding:20px;
     border:1px solid var(--border);
-    border-radius:var(--radius);
+    border-radius:25px;
     background:
-        linear-gradient(
-            145deg,
+        linear-gradient(145deg,
             rgba(255,255,255,.065),
-            rgba(255,255,255,.018)
-        );
-    box-shadow:var(--shadow);
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
+            rgba(255,255,255,.018));
+    box-shadow:
+        0 14px 40px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.05);
     transition:
         transform .25s ease,
         border-color .25s ease,
         box-shadow .25s ease;
 }
 
-.tool-card::before{
-    content:"";
-    position:absolute;
-    width:180px;
-    height:180px;
-    right:-80px;
-    top:-90px;
-    border-radius:50%;
-    background:var(--accent);
-    opacity:.09;
-    filter:blur(20px);
-    pointer-events:none;
-}
-
 .tool-card:hover{
     transform:translateY(-7px);
-    border-color:rgba(255,255,255,.16);
+    border-color:rgba(255,45,141,.35);
     box-shadow:
-        0 25px 70px rgba(0,0,0,.55),
-        0 0 30px color-mix(
-            in srgb,
-            var(--accent) 13%,
-            transparent
-        );
+        0 24px 55px rgba(0,0,0,.32),
+        0 0 30px rgba(255,45,141,.06);
 }
 
 .tool-number{
     display:inline-flex;
-    width:max-content;
-    padding:6px 10px;
+    min-width:38px;
+    height:30px;
+    align-items:center;
+    justify-content:center;
+    padding:0 9px;
     border-radius:999px;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.08);
-    color:#d4d4dc;
+    background:#111114;
+    border:1px solid rgba(255,255,255,.1);
+    color:#aaa;
     font-size:11px;
-    font-weight:900;
-}
-
-.tool-icon{
-    width:54px;
-    height:54px;
-    margin-top:17px;
-    display:grid;
-    place-items:center;
-    border-radius:17px;
-    font-size:26px;
-    background:
-        linear-gradient(
-            135deg,
-            color-mix(in srgb,var(--accent) 45%,transparent),
-            rgba(255,255,255,.06)
-        );
-    border:1px solid
-        color-mix(in srgb,var(--accent) 28%,transparent);
+    font-weight:950;
 }
 
 .tool-card h3{
-    margin-top:15px;
+    margin-top:17px;
     font-size:18px;
-    line-height:1.25;
-    letter-spacing:-.3px;
+    line-height:1.2;
+    letter-spacing:-.025em;
+    font-weight:950;
 }
 
 .tool-card p{
     margin-top:9px;
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.55;
-    flex:1;
+    min-height:65px;
+    color:#a8a8b0;
+    font-size:12.5px;
+    line-height:1.6;
 }
 
-.open-tool{
-    width:100%;
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:13px;
+}
+
+.tag{
+    padding:6px 8px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:999px;
+    background:rgba(255,255,255,.035);
+    color:#999;
+    font-size:9px;
+}
+
+.tool-actions{
+    display:grid;
+    grid-template-columns:1fr 44px;
+    gap:8px;
     margin-top:18px;
-    min-height:50px;
-    border:1px solid
-        color-mix(in srgb,var(--accent) 35%,transparent);
-    border-radius:16px;
-    color:white;
-    font-weight:900;
+}
+
+.launch{
+    position:relative;
+    isolation:isolate;
+    min-height:56px;
+    padding:0 18px;
+    border-radius:18px;
+    color:#fff;
+    font-weight:1000;
+    letter-spacing:-.01em;
+    cursor:pointer;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.16);
     background:
         linear-gradient(
-            135deg,
-            color-mix(in srgb,var(--accent) 35%,transparent),
-            rgba(255,255,255,.055)
+            145deg,
+            #ff2d8d 0%,
+            #d91472 42%,
+            #09090b 44%,
+            #09090b 57%,
+            #19e68c 100%
         );
     box-shadow:
-        inset 0 1px rgba(255,255,255,.18),
-        0 10px 25px rgba(0,0,0,.22);
-    transition:.2s ease;
+        inset 0 1px 0 rgba(255,255,255,.5),
+        inset 0 -5px 14px rgba(0,0,0,.32),
+        0 12px 22px rgba(0,0,0,.35);
+    transition:
+        transform .18s ease,
+        filter .18s ease,
+        box-shadow .18s ease;
 }
 
-.open-tool:hover{
-    transform:translateY(-2px);
-    filter:brightness(1.15);
+.launch::before{
+    content:"";
+    position:absolute;
+    inset:2px;
+    border-radius:16px;
+    background:linear-gradient(
+        180deg,
+        rgba(255,255,255,.24),
+        transparent 38%
+    );
+    pointer-events:none;
 }
 
-.open-tool:active{
-    transform:scale(.98);
+.launch::after{
+    content:"";
+    position:absolute;
+    width:80px;
+    height:160%;
+    top:-30%;
+    left:-90px;
+    transform:rotate(20deg);
+    background:rgba(255,255,255,.24);
+    filter:blur(8px);
+    transition:left .45s ease;
+    pointer-events:none;
 }
 
-/* =========================
-   EMPTY
-========================= */
+.launch:hover{
+    transform:translateY(-3px) scale(1.015);
+    filter:saturate(1.12);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.55),
+        0 16px 30px rgba(255,45,141,.16),
+        0 0 28px rgba(25,230,140,.08);
+}
+
+.launch:hover::after{
+    left:120%;
+}
+
+.launch:active{
+    transform:translateY(1px) scale(.985);
+}
+
+.favorite{
+    width:44px;
+    min-height:56px;
+    border-radius:18px;
+    color:#aaa;
+    background:#0e0e11;
+    border:1px solid var(--border);
+    cursor:pointer;
+    font-size:18px;
+}
+
+.favorite.active{
+    color:#ff65b0;
+    border-color:rgba(255,45,141,.45);
+    background:rgba(255,45,141,.08);
+}
 
 .empty{
     display:none;
     padding:60px 20px;
     text-align:center;
-    border:1px dashed var(--border);
-    border-radius:22px;
-    color:var(--muted);
+    border:1px dashed rgba(255,255,255,.13);
+    border-radius:25px;
+    color:#999;
 }
 
-.empty strong{
-    display:block;
-    color:white;
-    font-size:20px;
-    margin-bottom:8px;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
+.footer{
+    padding:45px 0 70px;
     border-top:1px solid var(--border);
-    padding:30px 20px 50px;
-    text-align:center;
-    color:var(--muted);
+    color:#777;
     font-size:12px;
+    text-align:center;
 }
 
-footer strong{
-    color:white;
+.footer strong{
+    color:#bbb;
 }
-
-/* =========================
-   TOAST
-========================= */
 
 .toast{
     position:fixed;
-    z-index:5000;
     left:50%;
     bottom:25px;
-    transform:
-        translate(-50%,20px);
+    z-index:5000;
+    transform:translate(-50%,20px);
     opacity:0;
     pointer-events:none;
-    max-width:min(92vw,520px);
-    padding:14px 18px;
-    border-radius:16px;
-    background:#17171f;
+    padding:13px 18px;
     border:1px solid rgba(255,255,255,.12);
-    box-shadow:0 20px 60px rgba(0,0,0,.5);
-    color:white;
-    font-size:13px;
+    border-radius:999px;
+    background:rgba(10,10,12,.92);
+    color:#fff;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(20px);
     transition:.25s ease;
+    font-size:13px;
 }
 
 .toast.show{
@@ -542,1114 +660,2128 @@ footer strong{
     transform:translate(-50%,0);
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+@media(max-width:1150px){
+    .tool-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
 
-@media(max-width:700px){
-
-    .header-inner{
-        padding:11px 14px;
+@media(max-width:900px){
+    .hero-grid{
+        grid-template-columns:1fr;
     }
 
-    .brand-icon{
-        width:43px;
-        height:43px;
-        border-radius:14px;
+    .tool-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:600px){
+    .container{
+        width:min(calc(100% - 18px),var(--max));
     }
 
-    .brand-title{
-        font-size:16px;
+    .hero{
+        padding-top:35px;
+    }
+
+    .hero-main{
+        padding:28px 22px;
+        border-radius:25px;
+    }
+
+    .dashboard{
+        padding:22px;
+        border-radius:25px;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .hero-copy{
+        font-size:14px;
+    }
+
+    .hero-stats{
+        grid-template-columns:1fr;
+    }
+
+    .tool-grid{
+        grid-template-columns:1fr;
+        gap:13px;
+    }
+
+    .tool-card{
+        padding:17px;
+    }
+
+    .tool-card p{
+        min-height:auto;
+    }
+
+    .header-actions .mini-btn{
+        display:none;
     }
 
     .brand-sub{
         display:none;
     }
 
-    .home-btn{
-        width:43px;
-        height:43px;
-    }
-
-    .hero{
-        padding:45px 16px 28px;
-    }
-
-    .hero h1{
-        letter-spacing:-2px;
-    }
-
-    .hero p{
-        font-size:14px;
-    }
-
-    .stats{
-        gap:8px;
-    }
-
-    .stat{
-        padding:14px 7px;
-    }
-
-    .stat strong{
-        font-size:20px;
-    }
-
-    .stat span{
-        font-size:10px;
-    }
-
-    .controls{
-        padding-left:14px;
-        padding-right:14px;
-    }
-
-    .tools-wrap{
-        padding-left:14px;
-        padding-right:14px;
-    }
-
-    .tools-grid{
-        grid-template-columns:1fr;
-    }
-
-    .tool-card{
-        min-height:270px;
-    }
-
     .section-head{
-        align-items:flex-start;
+        align-items:start;
         flex-direction:column;
     }
 }
+
+@media(prefers-reduced-motion:reduce){
+    *,
+    *::before,
+    *::after{
+        scroll-behavior:auto!important;
+        animation-duration:.001ms!important;
+        transition-duration:.001ms!important;
+    }
+}
 </style>
+
+<script type="application/ld+json">
+{
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"50 AI TOOL KIT",
+    "url":"https://u-tv.github.io/dailymoon.github.io/",
+    "applicationCategory":"EducationalApplication",
+    "operatingSystem":"Web Browser",
+    "description":"Browser-based AI prompt engineering toolkit containing prompt analysis, generation, refinement, testing and formatting utilities.",
+    "browserRequirements":"Requires JavaScript and a modern web browser.",
+    "isAccessibleForFree":true
+}
+</script>
 </head>
 
 <body>
 
-<header class="header">
-    <div class="header-inner">
-
-        <a class="brand" href="./" aria-label="50 AI TOOL KIT Home">
-            <div class="brand-icon">🧠</div>
-
-            <div class="brand-text">
-                <div class="brand-title">50 AI TOOL KIT</div>
-                <div class="brand-sub">
-                    Prompt Engineering Toolkit
-                </div>
-            </div>
+<header class="topbar">
+    <div class="container topbar-inner">
+        <a class="brand" href="./" aria-label="50 AI TOOL KIT home">
+            <span class="brand-mark">AI</span>
+            <span>
+                <span class="brand-title">50 AI TOOL KIT</span>
+                <span class="brand-sub">Prompt Engineering Workspace</span>
+            </span>
         </a>
 
-        <a
-            class="home-btn"
-            href="./"
-            aria-label="Home"
-            title="Home"
-        >
-            ⌂
-        </a>
+        <div class="header-actions">
+            <button class="mini-btn" id="favoritesBtn" type="button">
+                Favorites
+            </button>
 
+            <button class="mini-btn" id="topSearchBtn" type="button">
+                Search
+            </button>
+        </div>
     </div>
 </header>
-
 
 <main>
 
 <section class="hero">
+    <div class="container hero-grid">
 
-    <div class="badge">
-        ✦ AI PROMPT ENGINEERING SUITE
+        <div class="hero-main">
+            <span class="eyebrow">
+                ● REAL BROWSER-BASED TOOLS
+            </span>
+
+            <h1>
+                50 powerful
+                <span class="gradient-text">
+                    AI prompt tools.
+                </span>
+            </h1>
+
+            <p class="hero-copy">
+                Analyze, build, refine, compare, test, format and optimize
+                prompts using the real standalone HTML tools stored inside
+                this GitHub repository.
+            </p>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <strong id="toolCount">50</strong>
+                    <span>Tool slots</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="activeCount">0</strong>
+                    <span>Available files</span>
+                </div>
+
+                <div class="stat">
+                    <strong>100%</strong>
+                    <span>Browser UI</span>
+                </div>
+            </div>
+        </div>
+
+        <aside class="dashboard">
+            <h2>Toolkit Health</h2>
+
+            <p>
+                Master navigation uses relative GitHub Pages paths.
+                No external API is required for launching the standalone
+                tools.
+            </p>
+
+            <div class="progress">
+                <span id="healthProgress"></span>
+            </div>
+
+            <div class="health">
+                <span><i class="dot"></i>Static hosting</span>
+                <strong>READY</strong>
+            </div>
+
+            <div class="health">
+                <span><i class="dot"></i>Direct HTML tools</span>
+                <strong id="healthTools">CHECK</strong>
+            </div>
+
+            <div class="health">
+                <span><i class="dot"></i>Responsive UI</span>
+                <strong>READY</strong>
+            </div>
+
+            <div class="health">
+                <span><i class="dot"></i>SEO metadata</span>
+                <strong>READY</strong>
+            </div>
+        </aside>
+
     </div>
-
-    <h1>50 AI Tools<br>in One Toolkit</h1>
-
-    <p>
-        Analyze, build, refine, test, optimize and format
-        professional AI prompts using 50 standalone
-        browser-based prompt engineering tools.
-    </p>
-
-    <div class="stats">
-
-        <div class="stat">
-            <strong>50</strong>
-            <span>AI TOOLS</span>
-        </div>
-
-        <div class="stat">
-            <strong>06</strong>
-            <span>CATEGORIES</span>
-        </div>
-
-        <div class="stat">
-            <strong>100%</strong>
-            <span>BROWSER BASED</span>
-        </div>
-
-    </div>
-
 </section>
 
+<section class="controls" id="toolSearchArea">
+    <div class="container">
+        <div class="control-panel">
 
-<section class="controls">
+            <label class="search">
+                <span class="search-icon">⌕</span>
+                <input
+                    id="searchInput"
+                    type="search"
+                    autocomplete="off"
+                    spellcheck="false"
+                    placeholder="Search 50 AI tools..."
+                    aria-label="Search AI tools"
+                >
+            </label>
 
-    <div class="control-panel">
+            <button
+                class="filter-btn active"
+                data-filter="all"
+                type="button">
+                All
+            </button>
 
-        <div class="search-box">
+            <button
+                class="filter-btn"
+                data-filter="analysis"
+                type="button">
+                Analysis
+            </button>
 
-            <span class="search-icon">🔎</span>
+            <button
+                class="filter-btn"
+                data-filter="persona"
+                type="button">
+                Persona
+            </button>
 
-            <input
-                id="searchInput"
-                type="search"
-                autocomplete="off"
-                placeholder="Search 50 AI tools..."
-                aria-label="Search AI tools"
-            >
+            <button
+                class="filter-btn"
+                data-filter="refiner"
+                type="button">
+                Refiners
+            </button>
+
+            <button
+                class="filter-btn"
+                data-filter="builder"
+                type="button">
+                Builders
+            </button>
+
+            <button
+                class="filter-btn"
+                data-filter="enhancer"
+                type="button">
+                Enhancers
+            </button>
 
         </div>
-
-        <select
-            id="categorySelect"
-            class="category"
-            aria-label="Filter by category"
-        >
-
-            <option value="all">
-                All Categories
-            </option>
-
-            <option value="analysis">
-                🔬 Analysis & Scoring
-            </option>
-
-            <option value="persona">
-                🎭 Persona Builders
-            </option>
-
-            <option value="refiner">
-                ✏️ Refiners & Editors
-            </option>
-
-            <option value="advanced">
-                🧪 Advanced Techniques
-            </option>
-
-            <option value="domain">
-                📋 Domain Builders
-            </option>
-
-            <option value="enhancer">
-                🚀 Prompt Enhancers
-            </option>
-
-        </select>
-
     </div>
-
 </section>
 
-
-<section class="tools-wrap">
+<section class="container">
 
     <div class="section-head">
-
-        <h2>All AI Tools</h2>
-
-        <div
-            id="resultCount"
-            class="result-count"
-        >
-            50 / 50
+        <div>
+            <h2>AI Tool Directory</h2>
+            <p id="resultText">
+                Loading real tool links...
+            </p>
         </div>
-
     </div>
 
+    <div id="toolGrid" class="tool-grid"></div>
 
-    <div
-        id="toolsGrid"
-        class="tools-grid"
-    ></div>
-
-
-    <div
-        id="emptyState"
-        class="empty"
-    >
-        <strong>No tool found</strong>
-        Try another search term or category.
+    <div id="emptyState" class="empty">
+        No matching tools found. Try another search phrase.
     </div>
 
 </section>
 
 </main>
 
-
-<footer>
-
-    <strong>🧠 50 AI TOOL KIT</strong>
-
-    <br>
-
-    Prompt Engineering Toolkit ·
-    HTML · CSS · JavaScript ·
-    GitHub Pages Compatible
-
-    <br><br>
-
-    Built as a browser-based prompt engineering suite.
-
+<footer class="footer">
+    <div class="container">
+        <strong>50 AI TOOL KIT</strong>
+        · Browser-based Prompt Engineering Toolkit
+        · GitHub Pages compatible
+    </div>
 </footer>
-
 
 <div
     id="toast"
     class="toast"
     role="status"
-    aria-live="polite"
-></div>
-
+    aria-live="polite">
+</div>
 
 <script>
 "use strict";
 
 /*
-=========================================================
-50 AI TOOL KIT
-REAL FILE ROUTING SYSTEM
-=========================================================
-
-IMPORTANT:
-
-The filenames below are the EXACT filenames currently
-shown in your GitHub repository.
-
-The system does NOT:
-- create fake tools
-- create fake folders
-- use GitHub API
-- use iframe
-- use external API
-- generate replacement tools
-
-Every button opens the corresponding real HTML file.
-=========================================================
+|--------------------------------------------------------------------------
+| 50 AI TOOL KIT
+|--------------------------------------------------------------------------
+| IMPORTANT:
+| All href values point to real files in:
+|
+|     ./tools/
+|
+| Do NOT replace these paths with fake demo pages.
+|
+| Filename rule:
+| encodeURIComponent(filename)
+|
+| This correctly handles:
+| spaces, punctuation and Unicode.
+|--------------------------------------------------------------------------
 */
 
+const BASE = "./tools/";
 
-const TOOLS = [
+const tools = [
 
-    /* =========================
-       CATEGORY 1
-       TOOLS 01–12
-    ========================= */
+{
+    id:1,
+    name:"Prompt Analysis Tool",
+    file:"Prompt Analysis Tools.html",
+    category:"analysis",
+    description:"Deep analysis of prompt quality, tone, keywords, structure and classification.",
+    tags:["prompt analysis","AI prompt analyzer","prompt quality"],
+    keywords:[
+        "prompt analysis tool for AI prompts",
+        "AI prompt analysis checker",
+        "prompt quality analysis utility",
+        "detailed prompt analyzer online",
+        "prompt structure analysis tool",
+        "AI instruction analysis tool",
+        "prompt wording analysis checker",
+        "LLM prompt analysis utility",
+        "prompt intent analysis tool",
+        "prompt weakness analysis checker",
+        "AI prompt diagnostic tool",
+        "prompt engineering analysis workspace",
+        "prompt optimization analysis utility",
+        "prompt quality diagnostic",
+        "AI instruction quality checker",
+        "prompt analysis for beginners",
+        "prompt analysis for developers",
+        "browser prompt analysis tool",
+        "standalone prompt analyzer",
+        "prompt engineering analyzer"
+    ]
+},
 
-    {
-        no: 1,
-        name: "Prompt Analysis Tool",
-        file: "Prompt Analysis Tools.html",
-        category: "analysis",
-        icon: "🔬",
-        description: "Deep analysis of prompt quality, tone, keywords and classification."
-    },
+{
+    id:2,
+    name:"AI Role Generator",
+    file:"AI Role Generator.html",
+    category:"persona",
+    description:"Generate specific AI role instructions for professional prompt workflows.",
+    tags:["AI role","role generator","persona"],
+    keywords:[
+        "AI role generator for prompts",
+        "custom AI role prompt generator",
+        "expert role instruction generator",
+        "AI persona role builder",
+        "LLM role prompt creator",
+        "professional AI role generator",
+        "prompt role definition tool",
+        "AI system role builder",
+        "domain expert AI role maker",
+        "custom chatbot role generator",
+        "AI assistant role prompt tool",
+        "role based prompt generator",
+        "AI character role builder",
+        "prompt persona role generator",
+        "specialist AI role creator",
+        "AI role instruction builder",
+        "browser AI role generator",
+        "standalone AI role tool",
+        "prompt engineering role maker",
+        "custom LLM role builder"
+    ]
+},
 
-    {
-        no: 2,
-        name: "AI Role Generator",
-        file: "AI Role Generator.html",
-        category: "analysis",
-        icon: "🤖",
-        description: "Generate specific AI role instructions for professional prompts."
-    },
+{
+    id:3,
+    name:"Goal Clarity Checker",
+    file:"Goal Clarity Checker.html",
+    category:"analysis",
+    description:"Evaluate how clearly a prompt defines its intended goal and expected result.",
+    tags:["goal clarity","prompt goal","clarity"],
+    keywords:[
+        "AI prompt goal clarity checker",
+        "prompt objective clarity tool",
+        "goal clarity analyzer for prompts",
+        "AI instruction goal checker",
+        "prompt intent clarity analyzer",
+        "clear prompt goal checker",
+        "LLM prompt objective checker",
+        "prompt purpose analysis tool",
+        "AI task clarity checker",
+        "prompt goal optimization tool",
+        "instruction objective analyzer",
+        "prompt outcome clarity tool",
+        "AI prompt target checker",
+        "goal focused prompt analyzer",
+        "prompt objective validator",
+        "browser prompt goal checker",
+        "standalone prompt clarity utility",
+        "prompt engineering goal analyzer",
+        "AI task definition checker",
+        "prompt goal improvement tool"
+    ]
+},
 
-    {
-        no: 3,
-        name: "Goal Clarity Checker",
-        file: "Goal Clarity Checker.html",
-        category: "analysis",
-        icon: "🎯",
-        description: "Evaluate how clearly a prompt defines its intended goal."
-    },
+{
+    id:4,
+    name:"Missing Context Detector",
+    file:"Missing Context Detector.html",
+    category:"analysis",
+    description:"Identify missing context that could make an AI prompt incomplete or confusing.",
+    tags:["missing context","prompt context","AI"],
+    keywords:[
+        "missing context detector for prompts",
+        "AI prompt context checker",
+        "prompt context gap analyzer",
+        "missing information prompt checker",
+        "LLM context completeness tool",
+        "AI instruction context analyzer",
+        "prompt context weakness detector",
+        "context gap detection for AI prompts",
+        "prompt completeness checker",
+        "AI prompt missing details checker",
+        "prompt context validator",
+        "instruction context diagnostic",
+        "AI task context analyzer",
+        "prompt information gap tool",
+        "context aware prompt checker",
+        "browser prompt context detector",
+        "standalone context analysis tool",
+        "prompt engineering context checker",
+        "AI prompt completeness analyzer",
+        "missing prompt details detector"
+    ]
+},
 
-    {
-        no: 4,
-        name: "Missing Context Detector",
-        file: "Missing Context Detector.html",
-        category: "analysis",
-        icon: "🧩",
-        description: "Identify missing context that could confuse an AI model."
-    },
+{
+    id:5,
+    name:"Prompt Ambiguity Detector",
+    file:"Prompt Ambiguity Detector.html",
+    category:"analysis",
+    description:"Highlight vague, unclear or ambiguous phrases inside AI prompts.",
+    tags:["ambiguity","vague prompts","clarity"],
+    keywords:[
+        "AI prompt ambiguity detector",
+        "ambiguous prompt checker",
+        "vague prompt analysis tool",
+        "prompt ambiguity analyzer",
+        "unclear AI instruction checker",
+        "LLM ambiguity detection tool",
+        "prompt vagueness checker",
+        "AI instruction ambiguity scanner",
+        "prompt wording ambiguity analyzer",
+        "ambiguous language prompt tool",
+        "AI prompt clarity diagnostic",
+        "prompt uncertainty detector",
+        "vague instruction analyzer",
+        "prompt ambiguity validator",
+        "AI task ambiguity checker",
+        "browser prompt ambiguity tool",
+        "standalone vague prompt checker",
+        "prompt engineering ambiguity analyzer",
+        "unclear prompt detector",
+        "AI prompt wording checker"
+    ]
+},
 
-    {
-        no: 5,
-        name: "Prompt Ambiguity Detector",
-        file: "Prompt Ambiguity Detector.html",
-        category: "analysis",
-        icon: "⚠️",
-        description: "Highlight vague or ambiguous phrases inside prompts."
-    },
+{
+    id:6,
+    name:"Prompt Clarity Analyzer",
+    file:"Prompt Clarity Analyzer.html",
+    category:"analysis",
+    description:"Score prompt clarity across multiple dimensions and suggest clearer wording.",
+    tags:["clarity","prompt score","rewrite"],
+    keywords:[
+        "AI prompt clarity analyzer",
+        "prompt clarity scoring tool",
+        "clear prompt checker",
+        "prompt readability clarity analyzer",
+        "LLM instruction clarity tool",
+        "AI prompt wording clarity checker",
+        "prompt clarity score calculator",
+        "prompt communication clarity tool",
+        "AI instruction clarity evaluator",
+        "prompt rewrite clarity analyzer",
+        "prompt engineering clarity checker",
+        "clear AI instruction analyzer",
+        "prompt clarity diagnostic tool",
+        "AI task clarity scoring",
+        "prompt wording improvement checker",
+        "browser prompt clarity tool",
+        "standalone prompt clarity analyzer",
+        "prompt clarity evaluator",
+        "AI prompt communication checker",
+        "prompt clarity optimization utility"
+    ]
+},
 
-    {
-        no: 6,
-        name: "Prompt Clarity Analyzer",
-        file: "Prompt Clarity Analyzer.html",
-        category: "analysis",
-        icon: "💡",
-        description: "Score prompt clarity across multiple dimensions with improvement guidance."
-    },
+{
+    id:7,
+    name:"Prompt Complexity Analyzer",
+    file:"Prompt Complexity Analyzer.html",
+    category:"analysis",
+    description:"Measure linguistic and structural complexity in AI prompts.",
+    tags:["complexity","prompt analysis","structure"],
+    keywords:[
+        "AI prompt complexity analyzer",
+        "prompt complexity checker",
+        "LLM prompt complexity tool",
+        "prompt structure complexity analyzer",
+        "AI instruction complexity checker",
+        "prompt difficulty analysis tool",
+        "complex prompt diagnostic",
+        "prompt language complexity checker",
+        "AI prompt structure analyzer",
+        "prompt complexity scoring utility",
+        "instruction complexity analyzer",
+        "prompt engineering complexity checker",
+        "AI task complexity analysis",
+        "prompt density analyzer",
+        "prompt sentence complexity tool",
+        "browser prompt complexity analyzer",
+        "standalone prompt complexity tool",
+        "complexity score for AI prompts",
+        "prompt readability complexity checker",
+        "AI instruction complexity diagnostic"
+    ]
+},
 
-    {
-        no: 7,
-        name: "Prompt Complexity Analyzer",
-        file: "Prompt Complexity Analyzer.html",
-        category: "analysis",
-        icon: "📊",
-        description: "Measure linguistic and structural complexity in prompts."
-    },
+{
+    id:8,
+    name:"Prompt Length Optimizer",
+    file:"Prompt Length Optimizer.html",
+    category:"analysis",
+    description:"Evaluate prompt length and suggest practical optimization.",
+    tags:["prompt length","optimizer","tokens"],
+    keywords:[
+        "AI prompt length optimizer",
+        "prompt length checker",
+        "optimal prompt length tool",
+        "LLM prompt length analyzer",
+        "AI instruction length optimizer",
+        "prompt size optimization tool",
+        "prompt word count analyzer",
+        "prompt token length checker",
+        "AI prompt compacting utility",
+        "prompt length improvement tool",
+        "long prompt optimizer",
+        "short prompt optimization checker",
+        "prompt engineering length analyzer",
+        "AI instruction size checker",
+        "prompt length diagnostic",
+        "browser prompt length optimizer",
+        "standalone prompt size analyzer",
+        "prompt word optimization tool",
+        "LLM instruction length checker",
+        "AI prompt length planning utility"
+    ]
+},
 
-    {
-        no: 8,
-        name: "Prompt Length Optimizer",
-        file: "Prompt Length Optimizer.html",
-        category: "analysis",
-        icon: "📏",
-        description: "Suggest an appropriate prompt length for the intended use case."
-    },
+{
+    id:9,
+    name:"Prompt Quality Score",
+    file:"Prompt Quality Score.html",
+    category:"analysis",
+    description:"Calculate an overall prompt quality score with useful quality dimensions.",
+    tags:["quality score","prompt score","evaluation"],
+    keywords:[
+        "AI prompt quality score tool",
+        "prompt quality scoring calculator",
+        "LLM prompt quality checker",
+        "AI instruction quality score",
+        "prompt performance score tool",
+        "prompt engineering quality evaluator",
+        "prompt quality assessment utility",
+        "AI prompt scoring analyzer",
+        "prompt quality diagnostic checker",
+        "prompt effectiveness score",
+        "AI instruction evaluation tool",
+        "prompt quality measurement",
+        "prompt score calculator online",
+        "AI prompt quality analyzer",
+        "prompt quality benchmark utility",
+        "browser prompt quality scorer",
+        "standalone prompt scoring tool",
+        "prompt quality evaluation checker",
+        "LLM prompt quality assessment",
+        "AI prompt effectiveness evaluator"
+    ]
+},
 
-    {
-        no: 9,
-        name: "Prompt Quality Score",
-        file: "Prompt Quality Score.html",
-        category: "analysis",
-        icon: "⭐",
-        description: "Calculate overall prompt quality with detailed scoring."
-    },
+{
+    id:10,
+    name:"Prompt Readability Score",
+    file:"Prompt Readability Score.html",
+    category:"analysis",
+    description:"Measure prompt readability and language accessibility using browser-based analysis.",
+    tags:["readability","prompt score","language"],
+    keywords:[
+        "AI prompt readability score",
+        "prompt readability checker",
+        "LLM prompt readability analyzer",
+        "AI instruction readability tool",
+        "prompt language readability score",
+        "prompt text readability checker",
+        "AI prompt comprehension analyzer",
+        "prompt sentence readability tool",
+        "readability analysis for AI prompts",
+        "prompt writing readability checker",
+        "AI instruction language analyzer",
+        "prompt readability evaluator",
+        "prompt engineering readability utility",
+        "AI task readability checker",
+        "prompt comprehension scoring tool",
+        "browser prompt readability analyzer",
+        "standalone readability checker",
+        "LLM instruction readability score",
+        "prompt text clarity readability",
+        "AI prompt readability diagnostic"
+    ]
+},
 
-    {
-        no: 10,
-        name: "Prompt Readability Score",
-        file: "Prompt Readability Score.html",
-        category: "analysis",
-        icon: "📖",
-        description: "Evaluate prompt readability using readability-style analysis."
-    },
+{
+    id:11,
+    name:"Prompt Specificity Analyzer",
+    file:"Prompt Specificity Analyzer.html",
+    category:"analysis",
+    description:"Detect vague language and measure how specific an AI prompt is.",
+    tags:["specificity","vague language","prompt"],
+    keywords:[
+        "AI prompt specificity analyzer",
+        "prompt specificity checker",
+        "specific prompt scoring tool",
+        "LLM instruction specificity analyzer",
+        "AI prompt detail specificity checker",
+        "vague versus specific prompt tool",
+        "prompt specificity score",
+        "AI task specificity evaluator",
+        "prompt wording specificity analyzer",
+        "specific instruction checker",
+        "prompt engineering specificity tool",
+        "AI prompt precision specificity",
+        "prompt detail level analyzer",
+        "specificity diagnostic for prompts",
+        "AI instruction detail checker",
+        "browser prompt specificity analyzer",
+        "standalone prompt specificity tool",
+        "prompt precision scoring utility",
+        "LLM prompt specificity evaluator",
+        "AI prompt detail analyzer"
+    ]
+},
 
-    {
-        no: 11,
-        name: "Prompt Specificity Analyzer",
-        file: "Prompt Specificity Analyzer.html",
-        category: "analysis",
-        icon: "🔎",
-        description: "Detect vague language and measure prompt specificity."
-    },
+{
+    id:12,
+    name:"Prompt Structure Validator",
+    file:"Prompt Structure Validator.html",
+    category:"analysis",
+    description:"Validate prompt structure against practical prompt engineering principles.",
+    tags:["structure","validator","prompt"],
+    keywords:[
+        "AI prompt structure validator",
+        "prompt structure checker",
+        "LLM prompt format validator",
+        "AI instruction structure analyzer",
+        "prompt engineering structure checker",
+        "prompt organization validator",
+        "AI prompt section checker",
+        "prompt component validation tool",
+        "structured prompt analyzer",
+        "prompt format quality checker",
+        "AI instruction organization tool",
+        "prompt structure diagnostic",
+        "prompt architecture validator",
+        "AI task structure checker",
+        "prompt template validation tool",
+        "browser prompt validator",
+        "standalone prompt structure utility",
+        "LLM prompt organization checker",
+        "AI prompt structure evaluation",
+        "prompt framework validator"
+    ]
+},
 
-    {
-        no: 12,
-        name: "Prompt Structure Validator",
-        file: "Prompt Structure Validator.html",
-        category: "analysis",
-        icon: "🏗️",
-        description: "Validate prompt structure against practical prompt engineering patterns."
-    },
+/* ------------------------------------------------------------------
+   13–22 PERSONA TOOLS
+------------------------------------------------------------------ */
 
+{
+    id:13,
+    name:"Expert Persona Builder",
+    file:"Expert Persona Builder.html",
+    category:"persona",
+    description:"Build expert-domain persona prompts for professional AI workflows.",
+    tags:["expert persona","AI persona","role"],
+    keywords:[
+        "expert AI persona builder",
+        "expert role prompt builder",
+        "domain expert AI prompt",
+        "professional AI persona generator",
+        "specialist persona prompt tool",
+        "expert instruction generator",
+        "LLM expert persona builder",
+        "AI consultant persona creator",
+        "subject expert prompt generator",
+        "professional role persona builder",
+        "AI expert system prompt maker",
+        "domain specialist AI role",
+        "expert prompt template generator",
+        "AI mentor persona builder",
+        "technical expert prompt creator",
+        "browser expert persona tool",
+        "standalone expert role builder",
+        "AI professional persona generator",
+        "expert AI instruction builder",
+        "prompt engineering expert persona"
+    ]
+},
 
-    /* =========================
-       CATEGORY 2
-       TOOLS 13–22
-    ========================= */
+{
+    id:14,
+    name:"Customer Persona Prompt Builder",
+    file:"Customer Persona Prompt Builder.html",
+    category:"persona",
+    description:"Generate customer-profile personas for AI research, marketing and product workflows.",
+    tags:["customer persona","marketing","research"],
+    keywords:[
+        "AI customer persona prompt builder",
+        "customer persona AI generator",
+        "customer profile prompt tool",
+        "buyer persona AI prompt generator",
+        "marketing customer persona builder",
+        "LLM customer persona creator",
+        "AI audience persona prompt",
+        "customer research persona tool",
+        "customer avatar prompt builder",
+        "AI buyer profile generator",
+        "customer segmentation prompt tool",
+        "marketing persona prompt creator",
+        "customer behavior AI persona",
+        "product audience persona builder",
+        "customer journey persona prompt",
+        "browser customer persona generator",
+        "standalone buyer persona tool",
+        "AI customer profile builder",
+        "customer persona prompt template",
+        "prompt engineering customer persona"
+    ]
+},
 
-    {
-        no: 13,
-        name: "Expert Persona Builder",
-        file: "Expert Persona Builder.html",
-        category: "persona",
-        icon: "🧠",
-        description: "Build expert-domain persona prompts for AI systems."
-    },
+{
+    id:15,
+    name:"Teacher Persona Generator",
+    file:"Teacher Persona Generator.html",
+    category:"persona",
+    description:"Create educator-style AI persona prompts for teaching and learning workflows.",
+    tags:["teacher","education","AI persona"],
+    keywords:[
+        "AI teacher persona generator",
+        "teacher AI prompt builder",
+        "virtual teacher persona prompt",
+        "AI tutor persona generator",
+        "education prompt persona tool",
+        "LLM teacher role generator",
+        "AI educator prompt creator",
+        "teaching assistant persona builder",
+        "lesson teacher AI prompt",
+        "personal tutor persona generator",
+        "AI classroom persona tool",
+        "teacher instruction prompt builder",
+        "education AI role creator",
+        "study tutor prompt generator",
+        "AI teaching persona template",
+        "browser teacher persona tool",
+        "standalone AI tutor builder",
+        "teacher chatbot persona prompt",
+        "educational AI persona generator",
+        "prompt engineering teacher role"
+    ]
+},
 
-    {
-        no: 14,
-        name: "Customer Persona Prompt Builder",
-        file: "Customer Persona Prompt Builder.html",
-        category: "persona",
-        icon: "👤",
-        description: "Generate AI personas representing customer profiles."
-    },
+{
+    id:16,
+    name:"Interviewer Persona Builder",
+    file:"Interviewer Persona Builder.html",
+    category:"persona",
+    description:"Design AI interviewer personas for interviews, practice sessions and structured questioning.",
+    tags:["interviewer","interview","persona"],
+    keywords:[
+        "AI interviewer persona builder",
+        "interview AI prompt generator",
+        "mock interviewer persona tool",
+        "job interview AI persona",
+        "technical interviewer prompt builder",
+        "HR interviewer AI generator",
+        "LLM interviewer role creator",
+        "AI interview practice prompt",
+        "interview question persona builder",
+        "professional interviewer prompt",
+        "AI hiring interviewer persona",
+        "mock interview role generator",
+        "interview coach AI persona",
+        "candidate interview prompt builder",
+        "AI interviewer instruction tool",
+        "browser interview persona builder",
+        "standalone mock interviewer tool",
+        "interview simulation AI prompt",
+        "job interviewer role generator",
+        "prompt engineering interviewer persona"
+    ]
+},
 
-    {
-        no: 15,
-        name: "Teacher Persona Generator",
-        file: "Teacher Persona Generator.html",
-        category: "persona",
-        icon: "🎓",
-        description: "Create educator-style AI persona prompts."
-    },
+{
+    id:17,
+    name:"AI Agent Architect Studio",
+    file:"AI Agent Architect Studio.html",
+    category:"builder",
+    description:"Architect structured AI agent roles, behaviors and workflow instructions.",
+    tags:["AI agent","agent architecture","builder"],
+    keywords:[
+        "AI agent architect tool",
+        "AI agent prompt builder",
+        "LLM agent architecture builder",
+        "AI agent role generator",
+        "agent instruction prompt creator",
+        "autonomous AI agent planner",
+        "AI workflow agent builder",
+        "agent system prompt generator",
+        "AI assistant architecture tool",
+        "agent behavior prompt builder",
+        "AI agent specification generator",
+        "multi step agent prompt tool",
+        "AI agent design workspace",
+        "LLM agent configuration builder",
+        "AI automation agent prompt",
+        "browser AI agent architect",
+        "standalone agent prompt builder",
+        "AI agent workflow generator",
+        "agent persona architecture tool",
+        "prompt engineering agent studio"
+    ]
+},
 
-    {
-        no: 16,
-        name: "Interviewer Persona Builder",
-        file: "Interviewer Persona Builder.html",
-        category: "persona",
-        icon: "🎤",
-        description: "Design AI interviewer prompts for interview practice."
-    },
+{
+    id:18,
+    name:"Marketing Persona Generator",
+    file:"Marketing Persona Generator.html",
+    category:"persona",
+    description:"Build marketing-focused AI personas for strategy, content and copy workflows.",
+    tags:["marketing","persona","copywriting"],
+    keywords:[
+        "AI marketing persona generator",
+        "marketing AI persona prompt",
+        "marketing role prompt builder",
+        "AI copywriter persona generator",
+        "digital marketing persona tool",
+        "marketing strategist AI persona",
+        "LLM marketing role creator",
+        "content marketer prompt generator",
+        "brand strategist AI persona",
+        "marketing expert prompt builder",
+        "AI advertising persona tool",
+        "social media marketer AI role",
+        "marketing campaign persona prompt",
+        "customer marketing AI persona",
+        "AI growth marketer prompt",
+        "browser marketing persona generator",
+        "standalone marketing role tool",
+        "AI marketing strategist builder",
+        "prompt engineering marketing persona",
+        "professional marketing AI role"
+    ]
+},
 
-    {
-        no: 17,
-        name: "AI Agent Architect Studio",
-        file: "AI Agent Architect Studio.html",
-        category: "persona",
-        icon: "⚙️",
-        description: "Design structured AI agent architecture and role instructions."
-    },
+{
+    id:19,
+    name:"Researcher Persona Builder",
+    file:"Researcher Persona Builder.html",
+    category:"persona",
+    description:"Generate research-focused AI personas for structured investigation and analysis.",
+    tags:["researcher","academic","AI persona"],
+    keywords:[
+        "AI researcher persona builder",
+        "research AI prompt generator",
+        "academic researcher persona tool",
+        "LLM research role builder",
+        "research assistant AI persona",
+        "AI academic role prompt",
+        "research analyst persona generator",
+        "scientific researcher prompt builder",
+        "literature research AI persona",
+        "research methodology AI role",
+        "AI investigation persona tool",
+        "research expert prompt generator",
+        "academic writing researcher persona",
+        "data research AI prompt builder",
+        "AI study assistant persona",
+        "browser researcher persona builder",
+        "standalone research role generator",
+        "professional researcher AI prompt",
+        "prompt engineering research persona",
+        "research workflow AI persona"
+    ]
+},
 
-    {
-        no: 18,
-        name: "Marketing Persona Generator",
-        file: "Marketing Persona Generator.html",
-        category: "persona",
-        icon: "📣",
-        description: "Build AI marketing personas for strategy and copywriting."
-    },
+{
+    id:20,
+    name:"Developer Persona Generator",
+    file:"Developer Persona Generator.html",
+    category:"persona",
+    description:"Build software developer AI personas for coding and technical prompt workflows.",
+    tags:["developer","coding","AI persona"],
+    keywords:[
+        "AI developer persona generator",
+        "developer AI prompt builder",
+        "software engineer AI persona",
+        "coding expert persona generator",
+        "LLM developer role prompt",
+        "programmer AI persona builder",
+        "frontend developer AI role",
+        "backend developer prompt generator",
+        "full stack AI persona",
+        "software architect AI prompt",
+        "code reviewer persona generator",
+        "AI debugging expert persona",
+        "technical developer role builder",
+        "AI coding assistant persona",
+        "developer instruction prompt tool",
+        "browser developer persona generator",
+        "standalone coding persona tool",
+        "professional programmer AI prompt",
+        "prompt engineering developer role",
+        "software development AI persona"
+    ]
+},
 
-    {
-        no: 19,
-        name: "Researcher Persona Builder",
-        file: "Researcher Persona Builder.html",
-        category: "persona",
-        icon: "🔬",
-        description: "Generate academic and research-focused AI personas."
-    },
+{
+    id:21,
+    name:"Recruiter Persona Generator",
+    file:"Recruiter Persona Generator.html",
+    category:"persona",
+    description:"Create recruiter and HR-style AI personas for hiring workflows.",
+    tags:["recruiter","HR","hiring"],
+    keywords:[
+        "AI recruiter persona generator",
+        "recruiter AI prompt builder",
+        "HR persona prompt generator",
+        "AI hiring manager persona",
+        "talent acquisition AI role",
+        "LLM recruiter role builder",
+        "candidate screening persona tool",
+        "AI interview recruiter prompt",
+        "HR assistant persona generator",
+        "recruitment expert AI prompt",
+        "hiring workflow persona builder",
+        "AI talent specialist role",
+        "recruiter instruction prompt tool",
+        "job screening AI persona",
+        "human resources AI persona",
+        "browser recruiter persona generator",
+        "standalone HR persona tool",
+        "professional recruiter AI role",
+        "prompt engineering recruiter persona",
+        "AI hiring assistant prompt"
+    ]
+},
 
-    {
-        no: 20,
-        name: "Developer Persona Generator",
-        file: "Developer Persona Generator.html",
-        category: "persona",
-        icon: "💻",
-        description: "Build software developer personas for technical prompts."
-    },
+{
+    id:22,
+    name:"Story Writer Persona Builder",
+    file:"Story Writer Persona Builder.html",
+    category:"persona",
+    description:"Design creative writer AI personas for storytelling and narrative workflows.",
+    tags:["story writer","creative writing","persona"],
+    keywords:[
+        "AI story writer persona builder",
+        "creative writer AI prompt",
+        "storytelling persona generator",
+        "fiction writer AI role builder",
+        "novelist AI persona generator",
+        "LLM story writer prompt",
+        "creative writing persona tool",
+        "screenwriter AI persona builder",
+        "narrative writer prompt generator",
+        "AI fiction persona creator",
+        "story development AI role",
+        "character writer persona tool",
+        "creative storyteller AI prompt",
+        "AI narrative expert generator",
+        "story author persona builder",
+        "browser story writer persona",
+        "standalone creative writer tool",
+        "professional writer AI role",
+        "prompt engineering story persona",
+        "AI storytelling assistant prompt"
+    ]
+},
 
-    {
-        no: 21,
-        name: "Recruiter Persona Generator",
-        file: "Recruiter Persona Generator.html",
-        category: "persona",
-        icon: "🧑‍💼",
-        description: "Create HR and recruiter-style AI persona prompts."
-    },
+/* ------------------------------------------------------------------
+   23–32 REFINERS / BUILDERS
+------------------------------------------------------------------ */
 
-    {
-        no: 22,
-        name: "Story Writer Persona Builder",
-        file: "Story Writer Persona Builder.html",
-        category: "persona",
-        icon: "✍️",
-        description: "Design creative writer personas for storytelling prompts."
-    },
+{
+    id:23,
+    name:"Prompt Expander",
+    file:"Prompt Expander.html",
+    category:"refiner",
+    description:"Expand short prompts into detailed and structured instructions.",
+    tags:["prompt expander","prompt builder","detail"],
+    keywords:[
+        "AI prompt expander",
+        "prompt expansion tool",
+        "expand short AI prompts",
+        "prompt detail generator",
+        "LLM prompt expansion utility",
+        "AI instruction expander",
+        "short prompt to detailed prompt",
+        "prompt elaboration tool",
+        "AI prompt enhancement generator",
+        "prompt context expansion",
+        "prompt engineering expander",
+        "detailed prompt builder",
+        "AI task expansion tool",
+        "prompt specificity expansion",
+        "browser prompt expander",
+        "standalone prompt expansion tool",
+        "prompt enhancement utility",
+        "AI instruction detail booster",
+        "long form prompt generator",
+        "structured prompt expansion"
+    ]
+},
 
+{
+    id:24,
+    name:"Prompt Simplifier",
+    file:"Prompt Simplifier.html",
+    category:"refiner",
+    description:"Simplify complex prompts while preserving their core intent.",
+    tags:["simplifier","prompt editing","clarity"],
+    keywords:[
+        "AI prompt simplifier",
+        "prompt simplification tool",
+        "simplify complex AI prompts",
+        "LLM prompt cleaner simplifier",
+        "AI instruction simplifier",
+        "shorter prompt generator",
+        "prompt wording simplification",
+        "complex prompt rewrite tool",
+        "prompt clarity simplifier",
+        "AI task simplification utility",
+        "prompt engineering simplifier",
+        "concise prompt generator",
+        "prompt readability simplifier",
+        "AI instruction compression tool",
+        "browser prompt simplifier",
+        "standalone prompt rewriting tool",
+        "simple prompt converter",
+        "prompt complexity reduction tool",
+        "AI prompt concise writer",
+        "structured prompt simplifier"
+    ]
+},
 
-    /* =========================
-       CATEGORY 3
-       TOOLS 23–32
-    ========================= */
+{
+    id:25,
+    name:"Prompt Refiner",
+    file:"Prompt Refiner.html",
+    category:"refiner",
+    description:"Refine prompts for better clarity, specificity, structure and AI performance.",
+    tags:["refiner","optimization","prompt"],
+    keywords:[
+        "AI prompt refiner",
+        "prompt refinement tool",
+        "refine AI prompts",
+        "LLM prompt optimization utility",
+        "prompt improvement generator",
+        "AI instruction refiner",
+        "prompt wording refinement",
+        "prompt engineering refinement tool",
+        "better prompt generator",
+        "AI prompt enhancement utility",
+        "prompt quality refinement",
+        "prompt structure improvement tool",
+        "AI task prompt refiner",
+        "professional prompt editor",
+        "browser prompt refinement tool",
+        "standalone AI prompt refiner",
+        "prompt performance improvement",
+        "AI instruction optimization",
+        "prompt precision refinement",
+        "structured prompt improvement"
+    ]
+},
 
-    {
-        no: 23,
-        name: "Prompt Expander",
-        file: "Prompt Expander.html",
-        category: "refiner",
-        icon: "➕",
-        description: "Expand short prompts into detailed and structured prompts."
-    },
+{
+    id:26,
+    name:"Prompt Testing Sandbox",
+    file:"Prompt Testing Sandbox.html",
+    category:"builder",
+    description:"Test and iterate AI prompts in a browser-based prompt experimentation workspace.",
+    tags:["testing","sandbox","prompt"],
+    keywords:[
+        "AI prompt testing sandbox",
+        "prompt testing tool",
+        "test AI prompts online",
+        "LLM prompt experimentation tool",
+        "prompt iteration workspace",
+        "AI prompt test environment",
+        "prompt engineering sandbox",
+        "prompt evaluation workspace",
+        "AI instruction testing utility",
+        "prompt experiment tool",
+        "prompt comparison testing",
+        "AI prompt development sandbox",
+        "prompt workflow testing tool",
+        "browser prompt testing environment",
+        "standalone prompt sandbox",
+        "prompt iteration utility",
+        "AI task prompt tester",
+        "prompt quality testing workspace",
+        "LLM instruction testing tool",
+        "prompt engineering test bench"
+    ]
+},
 
-    {
-        no: 24,
-        name: "Prompt Simplifier",
-        file: "Prompt Simplifier.html",
-        category: "refiner",
-        icon: "➖",
-        description: "Simplify complex or unnecessarily long prompts."
-    },
+{
+    id:27,
+    name:"Prompt Version Tracker",
+    file:"Prompt Version Tracker.html",
+    category:"builder",
+    description:"Track multiple prompt versions and organize prompt iteration history.",
+    tags:["versioning","prompt tracker","workflow"],
+    keywords:[
+        "AI prompt version tracker",
+        "prompt version management tool",
+        "prompt history tracker",
+        "LLM prompt versioning utility",
+        "AI instruction version tracker",
+        "prompt revision manager",
+        "prompt iteration history tool",
+        "prompt engineering version control",
+        "AI prompt change tracker",
+        "prompt workflow version manager",
+        "prompt draft tracking tool",
+        "prompt revision organizer",
+        "browser prompt version tracker",
+        "standalone prompt history tool",
+        "AI prompt lifecycle tracker",
+        "prompt development versioning",
+        "LLM instruction history manager",
+        "prompt experiment version tracker",
+        "prompt revision comparison utility",
+        "AI prompt version workspace"
+    ]
+},
 
-    {
-        no: 25,
-        name: "Prompt Refiner",
-        file: "Prompt Refiner.html",
-        category: "refiner",
-        icon: "✨",
-        description: "Refine prompts for clearer and more effective AI output."
-    },
+{
+    id:28,
+    name:"Prompt Comparator",
+    file:"Prompt Comparator.html",
+    category:"builder",
+    description:"Compare two prompts side by side and identify useful differences.",
+    tags:["comparison","prompt","evaluation"],
+    keywords:[
+        "AI prompt comparator",
+        "compare two AI prompts",
+        "prompt comparison tool",
+        "LLM prompt difference analyzer",
+        "prompt side by side comparison",
+        "AI instruction comparison utility",
+        "prompt version comparison tool",
+        "prompt quality comparison",
+        "AI prompt evaluator",
+        "prompt wording comparison",
+        "prompt structure comparison tool",
+        "prompt engineering comparator",
+        "two prompt analysis utility",
+        "AI instruction difference checker",
+        "prompt optimization comparison",
+        "browser prompt comparison tool",
+        "standalone prompt comparator",
+        "LLM prompt testing comparison",
+        "prompt revision comparison",
+        "AI prompt benchmark comparison"
+    ]
+},
 
-    {
-        no: 26,
-        name: "Prompt Testing Sandbox",
-        file: "Prompt Testing Sandbox.html",
-        category: "refiner",
-        icon: "🧪",
-        description: "Test and iterate prompts in a controlled browser sandbox."
-    },
+{
+    id:29,
+    name:"Evaluation Criteria Builder",
+    file:"Evaluation Criteria Builder.html",
+    category:"builder",
+    description:"Define structured evaluation criteria for judging AI outputs.",
+    tags:["evaluation","criteria","AI output"],
+    keywords:[
+        "AI evaluation criteria builder",
+        "prompt evaluation criteria generator",
+        "LLM output evaluation tool",
+        "AI response scoring criteria",
+        "prompt testing rubric builder",
+        "AI quality criteria generator",
+        "output evaluation framework tool",
+        "LLM evaluation rubric builder",
+        "AI response assessment criteria",
+        "prompt engineering evaluation tool",
+        "AI output scoring framework",
+        "response quality checklist builder",
+        "prompt evaluation rubric generator",
+        "AI benchmark criteria tool",
+        "browser evaluation criteria builder",
+        "standalone AI rubric generator",
+        "LLM response evaluator setup",
+        "AI output quality framework",
+        "prompt assessment criteria tool",
+        "structured AI evaluation builder"
+    ]
+},
 
-    {
-        no: 27,
-        name: "Prompt Version Tracker",
-        file: "Prompt Version Tracker.html",
-        category: "refiner",
-        icon: "🗂️",
-        description: "Track and manage multiple prompt versions."
-    },
+{
+    id:30,
+    name:"Output Format Generator",
+    file:"Output Format Generator.html",
+    category:"builder",
+    description:"Generate precise format instructions for AI responses.",
+    tags:["output format","AI response","generator"],
+    keywords:[
+        "AI output format generator",
+        "prompt output format builder",
+        "LLM response format generator",
+        "AI response structure tool",
+        "JSON output prompt generator",
+        "table output prompt builder",
+        "structured response format generator",
+        "AI instruction format builder",
+        "prompt response template tool",
+        "LLM output structure generator",
+        "AI answer formatting prompt",
+        "response schema prompt builder",
+        "prompt engineering output format",
+        "AI output template generator",
+        "browser output format tool",
+        "standalone response format builder",
+        "AI response formatting utility",
+        "prompt output structure generator",
+        "LLM answer format prompt",
+        "custom AI output format creator"
+    ]
+},
 
-    {
-        no: 28,
-        name: "Prompt Comparator",
-        file: "Prompt Comparator.html",
-        category: "refiner",
-        icon: "⚖️",
-        description: "Compare two prompts side by side with scoring."
-    },
+{
+    id:31,
+    name:"Constraint Generator",
+    file:"Constraint Generator.html",
+    category:"builder",
+    description:"Add practical constraints, guardrails and boundaries to AI prompts.",
+    tags:["constraints","guardrails","prompt"],
+    keywords:[
+        "AI prompt constraint generator",
+        "prompt guardrail generator",
+        "LLM instruction constraints tool",
+        "AI response constraint builder",
+        "prompt boundary generator",
+        "AI instruction guardrail tool",
+        "prompt limitation generator",
+        "LLM output rules builder",
+        "AI prompt restriction generator",
+        "prompt engineering constraints",
+        "response control prompt builder",
+        "AI task rules generator",
+        "prompt safety constraint tool",
+        "structured prompt guardrails",
+        "browser prompt constraint builder",
+        "standalone AI guardrail generator",
+        "LLM response rules tool",
+        "AI instruction boundary builder",
+        "prompt control utility",
+        "custom AI constraint generator"
+    ]
+},
 
-    {
-        no: 29,
-        name: "Evaluation Criteria Builder",
-        file: "Evaluation Criteria Builder.html",
-        category: "refiner",
-        icon: "📋",
-        description: "Define evaluation criteria for AI-generated outputs."
-    },
+{
+    id:32,
+    name:"Multi-Step Prompt Builder",
+    file:"Multi-Step Prompt Builder..html",
+    category:"builder",
+    description:"Build complex multi-step prompt sequences for structured AI workflows.",
+    tags:["multi step","workflow","prompt builder"],
+    keywords:[
+        "multi step AI prompt builder",
+        "multi stage prompt generator",
+        "AI workflow prompt builder",
+        "LLM sequential prompt tool",
+        "step by step prompt structure",
+        "complex AI prompt workflow",
+        "multi phase instruction generator",
+        "AI process prompt builder",
+        "prompt sequence generator",
+        "LLM workflow instruction tool",
+        "AI task pipeline prompt",
+        "structured multi step prompt",
+        "prompt engineering workflow builder",
+        "AI automation prompt sequence",
+        "browser multi step prompt tool",
+        "standalone workflow prompt builder",
+        "sequential AI instruction generator",
+        "multi action prompt creator",
+        "AI process design prompt",
+        "complex prompt sequence builder"
+    ]
+},
 
-    {
-        no: 30,
-        name: "Output Format Generator",
-        file: "Output Format Generator.html",
-        category: "refiner",
-        icon: "🧾",
-        description: "Generate structured output-format instructions for AI."
-    },
+/* ------------------------------------------------------------------
+   33–36 ADVANCED
+------------------------------------------------------------------ */
 
-    {
-        no: 31,
-        name: "Constraint Generator",
-        file: "Constraint Generator.html",
-        category: "refiner",
-        icon: "🔒",
-        description: "Add constraints and guardrails to AI prompts."
-    },
+{
+    id:33,
+    name:"Zero-Shot Prompt Generator",
+    file:"Zero-Shot Prompt Generator.html",
+    category:"builder",
+    description:"Generate zero-shot prompts designed to work without explicit examples.",
+    tags:["zero shot","prompt generator","AI"],
+    keywords:[
+        "zero shot prompt generator",
+        "zero shot AI prompt builder",
+        "LLM zero shot prompt tool",
+        "no example prompt generator",
+        "zero shot instruction builder",
+        "AI zero shot task prompt",
+        "zero example AI prompt",
+        "zero shot prompt engineering",
+        "LLM instruction without examples",
+        "AI task zero shot generator",
+        "zero shot response prompt",
+        "zero shot workflow prompt builder",
+        "browser zero shot prompt tool",
+        "standalone zero shot generator",
+        "AI zero shot instruction creator",
+        "zero shot prompt template",
+        "prompt engineering zero shot utility",
+        "no example LLM prompt",
+        "AI zero shot task builder",
+        "zero shot instruction generator"
+    ]
+},
 
-    {
-        no: 32,
-        name: "Multi-Step Prompt Builder",
-        file: "Multi-Step Prompt Builder..html",
-        category: "refiner",
-        icon: "🔗",
-        description: "Build complex multi-step prompt sequences."
-    },
+{
+    id:34,
+    name:"Few-Shot Prompt Generator",
+    file:"34. Few-Shot Prompt Generator.html",
+    category:"builder",
+    description:"Build few-shot prompts with examples for consistent AI outputs.",
+    tags:["few shot","examples","prompt"],
+    keywords:[
+        "few shot prompt generator",
+        "few shot AI prompt builder",
+        "LLM few shot prompt tool",
+        "example based prompt generator",
+        "few example AI instruction builder",
+        "AI few shot template creator",
+        "few shot prompt engineering tool",
+        "demonstration prompt generator",
+        "LLM example prompt builder",
+        "AI pattern learning prompt",
+        "few shot response generator",
+        "example driven AI prompt",
+        "browser few shot prompt tool",
+        "standalone few shot generator",
+        "few shot instruction creator",
+        "AI example prompt template",
+        "prompt engineering few shot utility",
+        "multiple example AI prompt",
+        "few shot task builder",
+        "AI demonstration prompt generator"
+    ]
+},
 
+{
+    id:35,
+    name:"Chain of Thought Builder",
+    file:"35. Chain of Thought Builder.html",
+    category:"builder",
+    description:"Structure prompts for stepwise reasoning-oriented task workflows.",
+    tags:["reasoning","steps","prompt"],
+    keywords:[
+        "AI reasoning prompt builder",
+        "step by step prompt generator",
+        "structured reasoning prompt tool",
+        "LLM reasoning workflow builder",
+        "AI problem solving prompt",
+        "reasoning instruction generator",
+        "multi step reasoning prompt",
+        "AI analysis workflow prompt",
+        "structured thinking task builder",
+        "LLM reasoning instruction tool",
+        "AI decision workflow prompt",
+        "stepwise task prompt generator",
+        "prompt engineering reasoning builder",
+        "AI logic workflow generator",
+        "browser reasoning prompt tool",
+        "standalone reasoning builder",
+        "AI analysis instruction generator",
+        "structured task reasoning prompt",
+        "LLM problem solving prompt",
+        "reasoning workflow prompt creator"
+    ]
+},
 
-    /* =========================
-       CATEGORY 4
-       TOOLS 33–36
-    ========================= */
+{
+    id:36,
+    name:"Prompt Cleaner",
+    file:"36. Prompt Cleaner.html",
+    category:"refiner",
+    description:"Remove redundancy, filler and unnecessary noise from prompts.",
+    tags:["prompt cleaner","editing","optimization"],
+    keywords:[
+        "AI prompt cleaner",
+        "prompt cleanup tool",
+        "clean messy AI prompts",
+        "LLM prompt cleanup utility",
+        "prompt redundancy remover",
+        "AI instruction cleaner",
+        "prompt filler removal tool",
+        "prompt noise reduction utility",
+        "clean prompt generator",
+        "AI prompt editing tool",
+        "prompt optimization cleaner",
+        "prompt wording cleanup",
+        "AI instruction simplifier cleaner",
+        "prompt engineering cleanup tool",
+        "browser prompt cleaner",
+        "standalone prompt cleanup utility",
+        "AI prompt polishing tool",
+        "prompt redundancy checker",
+        "clean AI instruction generator",
+        "prompt text cleanup analyzer"
+    ]
+},
 
-    {
-        no: 33,
-        name: "Zero-Shot Prompt Generator",
-        file: "Zero-Shot Prompt Generator.html",
-        category: "advanced",
-        icon: "0️⃣",
-        description: "Generate zero-shot prompts without requiring examples."
-    },
+/* ------------------------------------------------------------------
+   37–46 DOMAIN BUILDERS
+------------------------------------------------------------------ */
 
-    {
-        no: 34,
-        name: "Few-Shot Prompt Generator",
-        file: "34. Few-Shot Prompt Generator.html",
-        category: "advanced",
-        icon: "🧪",
-        description: "Build few-shot prompts with structured example sets."
-    },
+{
+    id:37,
+    name:"Research Prompt Builder",
+    file:"37. Research Prompt Builder.html",
+    category:"builder",
+    description:"Build structured AI prompts for academic and professional research.",
+    tags:["research","academic","prompt"],
+    keywords:[
+        "AI research prompt builder",
+        "research prompt generator",
+        "academic research AI prompt",
+        "LLM research instruction builder",
+        "literature review prompt generator",
+        "research question AI prompt",
+        "academic analysis prompt tool",
+        "research methodology prompt builder",
+        "AI study research prompt",
+        "research assistant prompt generator",
+        "scientific research AI instructions",
+        "research workflow prompt tool",
+        "prompt engineering research builder",
+        "AI investigation prompt generator",
+        "browser research prompt tool",
+        "standalone academic prompt builder",
+        "research task prompt creator",
+        "LLM academic prompt generator",
+        "professional research AI prompt",
+        "structured research instruction builder"
+    ]
+},
 
-    {
-        no: 35,
-        name: "Chain of Thought Builder",
-        file: "35. Chain of Thought Builder.html",
-        category: "advanced",
-        icon: "🧠",
-        description: "Structure prompts for step-by-step reasoning workflows."
-    },
+{
+    id:38,
+    name:"Presentation Prompt Builder",
+    file:"38. Presentation Prompt Builder.html",
+    category:"builder",
+    description:"Generate structured prompts for slide decks, presentations and speaking content.",
+    tags:["presentation","slides","prompt"],
+    keywords:[
+        "AI presentation prompt builder",
+        "presentation prompt generator",
+        "AI slide deck prompt tool",
+        "PowerPoint prompt generator",
+        "LLM presentation instruction builder",
+        "slide structure AI prompt",
+        "presentation content prompt generator",
+        "AI speaker presentation prompt",
+        "pitch deck prompt builder",
+        "presentation outline AI tool",
+        "slide writing prompt generator",
+        "AI presentation workflow prompt",
+        "business presentation prompt tool",
+        "browser presentation prompt builder",
+        "standalone slide prompt generator",
+        "AI presentation structure tool",
+        "presentation design prompt creator",
+        "LLM slide content generator prompt",
+        "professional presentation AI prompt",
+        "presentation storytelling prompt builder"
+    ]
+},
 
-    {
-        no: 36,
-        name: "Prompt Cleaner",
-        file: "36. Prompt Cleaner.html",
-        category: "advanced",
-        icon: "🧹",
-        description: "Remove redundancy, filler and unnecessary noise from prompts."
-    },
+{
+    id:39,
+    name:"Case Study Prompt Builder",
+    file:"39. Case Study Prompt Builder.html",
+    category:"builder",
+    description:"Create structured prompts for business and analytical case studies.",
+    tags:["case study","business","analysis"],
+    keywords:[
+        "AI case study prompt builder",
+        "case study prompt generator",
+        "business case study AI prompt",
+        "LLM case analysis prompt tool",
+        "case study research prompt",
+        "AI business analysis prompt",
+        "case study writing prompt generator",
+        "professional case study prompt",
+        "case analysis AI instruction builder",
+        "business scenario prompt generator",
+        "AI consulting case prompt",
+        "case study structure prompt tool",
+        "case study report AI prompt",
+        "browser case study prompt builder",
+        "standalone case analysis generator",
+        "AI case research prompt",
+        "business problem case prompt",
+        "LLM case study workflow",
+        "case study storytelling prompt",
+        "structured case study AI prompt"
+    ]
+},
 
+{
+    id:40,
+    name:"Cover Letter Prompt Builder",
+    file:"40. Cover Letter Prompt Builder.html",
+    category:"builder",
+    description:"Build tailored AI prompts for professional cover letters.",
+    tags:["cover letter","career","job"],
+    keywords:[
+        "AI cover letter prompt builder",
+        "cover letter prompt generator",
+        "job application AI prompt",
+        "LLM cover letter writing prompt",
+        "professional cover letter AI tool",
+        "tailored cover letter prompt",
+        "career prompt generator cover letter",
+        "AI job application letter builder",
+        "cover letter customization prompt",
+        "resume cover letter AI instructions",
+        "job specific cover letter prompt",
+        "AI career writing prompt",
+        "cover letter optimization prompt",
+        "browser cover letter prompt builder",
+        "standalone cover letter generator",
+        "AI application letter prompt",
+        "professional job letter AI prompt",
+        "cover letter content builder",
+        "LLM career letter generator",
+        "structured cover letter prompt"
+    ]
+},
 
-    /* =========================
-       CATEGORY 5
-       TOOLS 37–46
-    ========================= */
+{
+    id:41,
+    name:"Resume Prompt Builder",
+    file:"41. Resume Prompt Builder.html",
+    category:"builder",
+    description:"Generate prompts for resume writing, optimization and tailoring.",
+    tags:["resume","CV","career"],
+    keywords:[
+        "AI resume prompt builder",
+        "resume prompt generator",
+        "CV optimization AI prompt",
+        "LLM resume writing prompt",
+        "professional resume AI tool",
+        "resume tailoring prompt generator",
+        "job specific resume prompt",
+        "AI CV improvement prompt",
+        "resume formatting prompt builder",
+        "career resume AI instructions",
+        "resume achievement prompt generator",
+        "AI job application resume tool",
+        "resume keyword optimization prompt",
+        "browser resume prompt builder",
+        "standalone CV prompt generator",
+        "AI resume editing prompt",
+        "professional CV AI prompt",
+        "resume content improvement tool",
+        "LLM resume optimization utility",
+        "structured resume prompt builder"
+    ]
+},
 
-    {
-        no: 37,
-        name: "Research Prompt Builder",
-        file: "37. Research Prompt Builder.html",
-        category: "domain",
-        icon: "🔬",
-        description: "Build structured prompts for academic and research workflows."
-    },
+{
+    id:42,
+    name:"Email Prompt Builder",
+    file:"42. Email Prompt Builder.html",
+    category:"builder",
+    description:"Craft professional AI prompts for business and personal email writing.",
+    tags:["email","writing","communication"],
+    keywords:[
+        "AI email prompt builder",
+        "email writing prompt generator",
+        "professional email AI prompt",
+        "LLM email instruction builder",
+        "business email prompt tool",
+        "AI email response generator prompt",
+        "formal email prompt builder",
+        "customer email AI prompt",
+        "work email writing tool",
+        "email tone prompt generator",
+        "AI communication prompt builder",
+        "email rewrite instruction generator",
+        "professional message AI prompt",
+        "browser email prompt builder",
+        "standalone email prompt generator",
+        "AI email drafting prompt",
+        "business communication AI tool",
+        "email response prompt template",
+        "LLM professional email generator",
+        "structured email writing prompt"
+    ]
+},
 
-    {
-        no: 38,
-        name: "Presentation Prompt Builder",
-        file: "38. Presentation Prompt Builder.html",
-        category: "domain",
-        icon: "📊",
-        description: "Generate prompts for presentations and slide decks."
-    },
+{
+    id:43,
+    name:"Instagram Prompt Builder",
+    file:"43. Instagram Prompt Builder.html",
+    category:"builder",
+    description:"Build AI prompts for Instagram captions, content and social media ideas.",
+    tags:["Instagram","social media","content"],
+    keywords:[
+        "AI Instagram prompt builder",
+        "Instagram caption prompt generator",
+        "social media AI prompt tool",
+        "Instagram content prompt builder",
+        "LLM Instagram writing prompt",
+        "AI social caption generator prompt",
+        "Instagram post idea prompt",
+        "Instagram reel prompt builder",
+        "social media content AI instructions",
+        "Instagram marketing prompt generator",
+        "AI caption writing prompt",
+        "Instagram hashtag prompt tool",
+        "creator content prompt builder",
+        "browser Instagram prompt tool",
+        "standalone social media prompt generator",
+        "AI Instagram content planner prompt",
+        "Instagram engagement prompt",
+        "LLM social content generator prompt",
+        "Instagram storytelling prompt builder",
+        "professional Instagram AI prompt"
+    ]
+},
 
-    {
-        no: 39,
-        name: "Case Study Prompt Builder",
-        file: "39. Case Study Prompt Builder.html",
-        category: "domain",
-        icon: "📚",
-        description: "Create structured prompts for business case studies."
-    },
+{
+    id:44,
+    name:"YouTube Prompt Builder",
+    file:"44. YouTube Prompt Builder.html",
+    category:"builder",
+    description:"Generate AI prompts for YouTube scripts, titles, descriptions and content.",
+    tags:["YouTube","video","content"],
+    keywords:[
+        "AI YouTube prompt builder",
+        "YouTube script prompt generator",
+        "YouTube content AI prompt",
+        "LLM video script prompt tool",
+        "YouTube title prompt generator",
+        "YouTube description AI prompt",
+        "video creator prompt builder",
+        "AI YouTube content planner",
+        "YouTube storytelling prompt tool",
+        "video marketing AI prompt",
+        "YouTube shorts prompt generator",
+        "AI video script instruction builder",
+        "creator YouTube prompt tool",
+        "browser YouTube prompt builder",
+        "standalone video prompt generator",
+        "YouTube SEO prompt builder",
+        "AI channel content prompt",
+        "LLM YouTube writing generator",
+        "video outline AI prompt",
+        "professional YouTube AI prompt"
+    ]
+},
 
-    {
-        no: 40,
-        name: "Cover Letter Prompt Builder",
-        file: "40. Cover Letter Prompt Builder.html",
-        category: "domain",
-        icon: "✉️",
-        description: "Build tailored cover-letter writing prompts."
-    },
+{
+    id:45,
+    name:"LinkedIn Prompt Builder",
+    file:"45. LinkedIn Prompt Builder.html",
+    category:"builder",
+    description:"Create AI prompts for LinkedIn posts, profiles and professional content.",
+    tags:["LinkedIn","career","professional"],
+    keywords:[
+        "AI LinkedIn prompt builder",
+        "LinkedIn post prompt generator",
+        "LinkedIn profile AI prompt",
+        "professional social media prompt",
+        "LLM LinkedIn content prompt",
+        "LinkedIn bio prompt builder",
+        "AI professional post generator prompt",
+        "LinkedIn personal branding prompt",
+        "career content AI prompt",
+        "LinkedIn networking prompt tool",
+        "AI LinkedIn writing instruction",
+        "LinkedIn content strategy prompt",
+        "professional profile prompt generator",
+        "browser LinkedIn prompt builder",
+        "standalone LinkedIn AI tool",
+        "LinkedIn thought leadership prompt",
+        "AI career branding prompt",
+        "LLM professional content generator",
+        "LinkedIn post writing prompt",
+        "structured LinkedIn AI prompt"
+    ]
+},
 
-    {
-        no: 41,
-        name: "Resume Prompt Builder",
-        file: "41. Resume Prompt Builder.html",
-        category: "domain",
-        icon: "📄",
-        description: "Generate resume writing and optimization prompts."
-    },
+{
+    id:46,
+    name:"Blog Prompt Builder",
+    file:"46. Blog Prompt Builder.html",
+    category:"builder",
+    description:"Build detailed AI prompts for blog articles and content workflows.",
+    tags:["blog","SEO","writing"],
+    keywords:[
+        "AI blog prompt builder",
+        "blog writing prompt generator",
+        "SEO blog AI prompt",
+        "LLM article prompt tool",
+        "long form blog prompt builder",
+        "AI content writing prompt",
+        "blog outline prompt generator",
+        "SEO article instruction builder",
+        "AI blog structure prompt",
+        "content marketing blog prompt",
+        "blog research AI prompt",
+        "article writing prompt tool",
+        "AI blog optimization prompt",
+        "browser blog prompt builder",
+        "standalone article prompt generator",
+        "professional blog AI prompt",
+        "LLM SEO content prompt",
+        "blog storytelling prompt builder",
+        "AI content brief prompt",
+        "structured blog writing prompt"
+    ]
+},
 
-    {
-        no: 42,
-        name: "Email Prompt Builder",
-        file: "42. Email Prompt Builder.html",
-        category: "domain",
-        icon: "📧",
-        description: "Craft professional email-writing prompts."
-    },
+/* ------------------------------------------------------------------
+   47–50 ENHANCERS
+------------------------------------------------------------------ */
 
-    {
-        no: 43,
-        name: "Instagram Prompt Builder",
-        file: "43. Instagram Prompt Builder.html",
-        category: "domain",
-        icon: "📸",
-        description: "Build prompts for Instagram captions and content."
-    },
+{
+    id:47,
+    name:"Prompt Precision Improver",
+    file:"47. Prompt Precision Improver.html",
+    category:"enhancer",
+    description:"Improve prompt precision and reduce ambiguity in AI instructions.",
+    tags:["precision","prompt","optimization"],
+    keywords:[
+        "AI prompt precision improver",
+        "prompt precision tool",
+        "improve AI prompt precision",
+        "LLM instruction precision analyzer",
+        "prompt wording precision utility",
+        "AI prompt exactness tool",
+        "precise prompt generator",
+        "prompt ambiguity reduction tool",
+        "AI instruction precision checker",
+        "prompt engineering precision utility",
+        "specific AI instruction improver",
+        "prompt clarity precision tool",
+        "LLM prompt accuracy wording",
+        "AI task precision enhancer",
+        "prompt detail precision analyzer",
+        "browser prompt precision tool",
+        "standalone prompt precision improver",
+        "professional prompt precision editor",
+        "AI instruction refinement utility",
+        "precise prompt optimization"
+    ]
+},
 
-    {
-        no: 44,
-        name: "YouTube Prompt Builder",
-        file: "44. YouTube Prompt Builder.html",
-        category: "domain",
-        icon: "▶️",
-        description: "Generate prompts for YouTube scripts and descriptions."
-    },
+{
+    id:48,
+    name:"Prompt Detail Booster",
+    file:"48. Prompt Detail Booster.html",
+    category:"enhancer",
+    description:"Add useful depth, context and specificity to thin prompts.",
+    tags:["detail","context","prompt"],
+    keywords:[
+        "AI prompt detail booster",
+        "prompt detail enhancement tool",
+        "add detail to AI prompts",
+        "LLM prompt depth generator",
+        "AI instruction detail improver",
+        "prompt context booster",
+        "prompt specificity detail tool",
+        "thin prompt enhancement utility",
+        "AI prompt depth analyzer",
+        "prompt information booster",
+        "detailed AI instruction generator",
+        "prompt engineering detail tool",
+        "AI task context enhancer",
+        "prompt richness improvement",
+        "browser prompt detail booster",
+        "standalone prompt enhancement tool",
+        "AI instruction depth builder",
+        "prompt context expansion utility",
+        "LLM prompt detail improver",
+        "structured prompt detail enhancer"
+    ]
+},
 
-    {
-        no: 45,
-        name: "LinkedIn Prompt Builder",
-        file: "45. LinkedIn Prompt Builder.html",
-        category: "domain",
-        icon: "💼",
-        description: "Create LinkedIn post and profile prompts."
-    },
+{
+    id:49,
+    name:"Prompt Focus Enhancer",
+    file:"49. Prompt Focus Enhancer.html",
+    category:"enhancer",
+    description:"Sharpen prompt intent, scope and task focus.",
+    tags:["focus","intent","prompt"],
+    keywords:[
+        "AI prompt focus enhancer",
+        "prompt focus improvement tool",
+        "sharpen AI prompt intent",
+        "LLM prompt scope analyzer",
+        "AI instruction focus tool",
+        "prompt task focus generator",
+        "focused prompt optimization",
+        "prompt intent sharpening utility",
+        "AI task scope checker",
+        "prompt distraction remover",
+        "focused AI instruction builder",
+        "prompt engineering focus tool",
+        "AI prompt objective enhancer",
+        "prompt scope refinement",
+        "browser prompt focus enhancer",
+        "standalone prompt focus tool",
+        "LLM instruction focus improver",
+        "AI prompt intent optimizer",
+        "professional prompt focus editor",
+        "structured prompt focus utility"
+    ]
+},
 
-    {
-        no: 46,
-        name: "Blog Prompt Builder",
-        file: "46. Blog Prompt Builder.html",
-        category: "domain",
-        icon: "📝",
-        description: "Build detailed prompts for blog writing."
-    },
+{
+    id:50,
+    name:"Prompt Formatter",
+    file:"50. Prompt Formatter.html",
+    category:"enhancer",
+    description:"Format prompts with clean structure, sections and readable styling.",
+    tags:["formatter","formatting","prompt"],
+    keywords:[
+        "AI prompt formatter",
+        "prompt formatting tool",
+        "format AI prompts online",
+        "LLM prompt structure formatter",
+        "AI instruction formatting utility",
+        "prompt template formatter",
+        "structured prompt formatter",
+        "prompt engineering formatting tool",
+        "AI prompt section formatter",
+        "clean prompt format generator",
+        "prompt readability formatting",
+        "AI task instruction formatter",
+        "professional prompt formatter",
+        "browser prompt formatting tool",
+        "standalone AI prompt formatter",
+        "prompt organization formatter",
+        "LLM instruction structure tool",
+        "AI prompt layout formatter",
+        "formatted prompt generator",
+        "structured AI prompt creator"
+    ]
+}
 
+];
 
-    /* =========================
-       CATEGORY 6
-       TOOLS 47–50
-    ========================= */
+/* ------------------------------------------------------------------
+   STATE
+------------------------------------------------------------------ */
 
-    {
-        no: 47,
-        name: "Prompt Precision Improver",
-        file: "47. Prompt Precision Improver.html",
-        category: "enhancer",
-        icon: "🎯",
-        description: "Improve prompt precision and reduce ambiguity."
-    },
+const state = {
+    query:"",
+    category:"all",
+    favorites:new Set(),
+    favoritesOnly:false
+};
 
-    {
-        no: 48,
-        name: "Prompt Detail Booster",
-        file: "48. Prompt Detail Booster.html",
-        category: "enhancer",
-        icon: "🔍",
-        description: "Add depth and specificity to thin prompts."
-    },
+const STORAGE_KEY = "ai-tool-kit-favorites-v1";
 
-    {
-        no: 49,
-        name: "Prompt Focus Enhancer",
-        file: "49. Prompt Focus Enhancer.html",
-        category: "enhancer",
-        icon: "🧭",
-        description: "Sharpen prompt focus, intent and task direction."
-    },
+/* ------------------------------------------------------------------
+   DOM
+------------------------------------------------------------------ */
 
-    {
-        no: 50,
-        name: "Prompt Formatter",
-        file: "50. Prompt Formatter.html",
-        category: "enhancer",
-        icon: "🧾",
-        description: "Format prompts with proper structure and presentation."
+const grid = document.getElementById("toolGrid");
+const searchInput = document.getElementById("searchInput");
+const resultText = document.getElementById("resultText");
+const emptyState = document.getElementById("emptyState");
+const activeCount = document.getElementById("activeCount");
+const toolCount = document.getElementById("toolCount");
+const healthTools = document.getElementById("healthTools");
+const healthProgress = document.getElementById("healthProgress");
+const toast = document.getElementById("toast");
+
+/* ------------------------------------------------------------------
+   STORAGE
+------------------------------------------------------------------ */
+
+function loadFavorites(){
+
+    try{
+
+        const saved =
+            JSON.parse(
+                localStorage.getItem(STORAGE_KEY) || "[]"
+            );
+
+        if(Array.isArray(saved)){
+            state.favorites = new Set(
+                saved.map(Number)
+            );
+        }
+
+    }catch(error){
+
+        state.favorites = new Set();
+
     }
-
-];
-
-
-/*
-=========================================================
-COLOR SYSTEM
-=========================================================
-*/
-
-const COLORS = [
-    "#8b5cf6",
-    "#ec4899",
-    "#22d3ee",
-    "#22c55e",
-    "#f59e0b",
-    "#a855f7",
-    "#06b6d4",
-    "#84cc16"
-];
-
-
-/*
-=========================================================
-DOM
-=========================================================
-*/
-
-const grid =
-    document.getElementById("toolsGrid");
-
-const searchInput =
-    document.getElementById("searchInput");
-
-const categorySelect =
-    document.getElementById("categorySelect");
-
-const resultCount =
-    document.getElementById("resultCount");
-
-const emptyState =
-    document.getElementById("emptyState");
-
-const toast =
-    document.getElementById("toast");
-
-
-/*
-=========================================================
-SAFE URL BUILDER
-=========================================================
-
-This is the important fix.
-
-The actual file name is encoded while keeping
-the relative repository path.
-
-Example:
-
-Prompt Analysis Tools.html
-
-becomes:
-
-./Prompt%20Analysis%20Tools.html
-
-No folder guessing.
-No GitHub API.
-No fake path.
-=========================================================
-*/
-
-function buildToolURL(fileName){
-
-    return "./" +
-        encodeURIComponent(fileName);
-
 }
 
-
-/*
-=========================================================
-TOOL CARD
-=========================================================
-*/
-
-function createToolCard(tool,index){
-
-    const card =
-        document.createElement("article");
-
-    card.className = "tool-card";
-
-    card.dataset.name =
-        tool.name.toLowerCase();
-
-    card.dataset.category =
-        tool.category;
-
-    card.style.setProperty(
-        "--accent",
-        COLORS[index % COLORS.length]
-    );
-
-    const number =
-        String(tool.no).padStart(2,"0");
-
-    card.innerHTML = `
-
-        <span class="tool-number">
-            TOOL ${number}
-        </span>
-
-        <div
-            class="tool-icon"
-            aria-hidden="true"
-        >
-            ${tool.icon}
-        </div>
-
-        <h3>
-            ${escapeHTML(tool.name)}
-        </h3>
-
-        <p>
-            ${escapeHTML(tool.description)}
-        </p>
-
-        <button
-            class="open-tool"
-            type="button"
-            data-file="${escapeHTML(tool.file)}"
-            aria-label="Open ${escapeHTML(tool.name)}"
-        >
-            Open Tool →
-        </button>
-
-    `;
-
-    const button =
-        card.querySelector(".open-tool");
-
-    button.addEventListener(
-        "click",
-        function(){
-
-            openRealTool(tool);
-
-        }
-    );
-
-    return card;
-}
-
-
-/*
-=========================================================
-RENDER
-=========================================================
-*/
-
-function renderTools(){
-
-    const query =
-        searchInput.value
-            .trim()
-            .toLowerCase();
-
-    const category =
-        categorySelect.value;
-
-    grid.innerHTML = "";
-
-    let visible = 0;
-
-    TOOLS.forEach(
-        (tool,index)=>{
-
-            const matchesSearch =
-                !query ||
-                tool.name
-                    .toLowerCase()
-                    .includes(query) ||
-                tool.description
-                    .toLowerCase()
-                    .includes(query);
-
-            const matchesCategory =
-                category === "all" ||
-                tool.category === category;
-
-            if(
-                matchesSearch &&
-                matchesCategory
-            ){
-
-                grid.appendChild(
-                    createToolCard(tool,index)
-                );
-
-                visible++;
-
-            }
-
-        }
-    );
-
-    resultCount.textContent =
-        `${visible} / ${TOOLS.length}`;
-
-    emptyState.style.display =
-        visible === 0
-            ? "block"
-            : "none";
-}
-
-
-/*
-=========================================================
-OPEN REAL HTML TOOL
-=========================================================
-
-IMPORTANT:
-This opens the ACTUAL HTML file stored in GitHub.
-
-It does not recreate the tool inside index.html.
-=========================================================
-*/
-
-function openRealTool(tool){
-
-    const url =
-        buildToolURL(tool.file);
-
-    /*
-    Save last opened tool.
-    */
+function saveFavorites(){
 
     try{
 
         localStorage.setItem(
-            "50-ai-tool-kit:last-tool",
-            JSON.stringify({
-                no:tool.no,
-                name:tool.name,
-                file:tool.file,
-                openedAt:new Date().toISOString()
-            })
+            STORAGE_KEY,
+            JSON.stringify([...state.favorites])
         );
 
     }catch(error){
 
-        console.warn(
-            "localStorage unavailable:",
-            error
-        );
+        /* Private browsing / blocked storage:
+           app continues working without persistence. */
 
     }
-
-    /*
-    Navigate directly to the real HTML.
-    */
-
-    window.location.assign(url);
 }
 
+/* ------------------------------------------------------------------
+   URL
+------------------------------------------------------------------ */
 
-/*
-=========================================================
-SEARCH
-=========================================================
-*/
+function toolURL(file){
 
-searchInput.addEventListener(
-    "input",
-    renderTools
-);
+    return BASE + encodeURIComponent(file);
+}
 
-categorySelect.addEventListener(
-    "change",
-    renderTools
-);
+/* ------------------------------------------------------------------
+   TEXT SEARCH
+------------------------------------------------------------------ */
 
+function searchable(tool){
 
-/*
-=========================================================
-KEYBOARD SHORTCUT
-=========================================================
-*/
+    return [
+        tool.name,
+        tool.description,
+        tool.category,
+        ...(tool.tags || []),
+        ...(tool.keywords || [])
+    ]
+    .join(" ")
+    .toLowerCase();
+}
 
-document.addEventListener(
-    "keydown",
-    event=>{
+/* ------------------------------------------------------------------
+   RENDER
+------------------------------------------------------------------ */
 
-        if(
-            event.key === "/" &&
-            document.activeElement !== searchInput
-        ){
+function render(){
 
-            event.preventDefault();
+    const q =
+        state.query
+            .trim()
+            .toLowerCase();
 
-            searchInput.focus();
+    const filtered =
+        tools.filter(tool => {
 
-        }
+            const categoryMatch =
+                state.category === "all" ||
+                tool.category === state.category;
 
-        if(
-            event.key === "Escape" &&
-            document.activeElement === searchInput
-        ){
+            const favoriteMatch =
+                !state.favoritesOnly ||
+                state.favorites.has(tool.id);
 
-            searchInput.value = "";
+            const queryMatch =
+                !q ||
+                searchable(tool).includes(q);
 
-            renderTools();
+            return (
+                categoryMatch &&
+                favoriteMatch &&
+                queryMatch
+            );
 
-            searchInput.blur();
+        });
 
-        }
+    grid.innerHTML = "";
+
+    if(!filtered.length){
+
+        emptyState.style.display = "block";
+
+    }else{
+
+        emptyState.style.display = "none";
+
+        const fragment =
+            document.createDocumentFragment();
+
+        filtered.forEach(tool => {
+
+            const card =
+                document.createElement("article");
+
+            card.className = "tool-card";
+
+            card.dataset.id = String(tool.id);
+
+            const favorite =
+                state.favorites.has(tool.id);
+
+            const keywordTags =
+                tool.tags
+                    .slice(0,3)
+                    .map(tag =>
+                        `<span class="tag">${escapeHTML(tag)}</span>`
+                    )
+                    .join("");
+
+            card.innerHTML = `
+                <span class="tool-number">
+                    ${String(tool.id).padStart(2,"0")}
+                </span>
+
+                <h3>
+                    ${escapeHTML(tool.name)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(tool.description)}
+                </p>
+
+                <div class="tags">
+                    ${keywordTags}
+                </div>
+
+                <div class="tool-actions">
+
+                    <button
+                        class="launch"
+                        type="button"
+                        data-launch="${tool.id}"
+                        aria-label="Open ${escapeHTML(tool.name)}"
+                    >
+                        OPEN TOOL →
+                    </button>
+
+                    <button
+                        class="favorite ${favorite ? "active" : ""}"
+                        type="button"
+                        data-favorite="${tool.id}"
+                        aria-label="${favorite ? "Remove from favorites" : "Add to favorites"}"
+                        aria-pressed="${favorite}"
+                    >
+                        ${favorite ? "★" : "☆"}
+                    </button>
+
+                </div>
+            `;
+
+            fragment.appendChild(card);
+
+        });
+
+        grid.appendChild(fragment);
 
     }
-);
 
+    resultText.textContent =
+        `${filtered.length} tool${filtered.length === 1 ? "" : "s"} shown`;
 
-/*
-=========================================================
-HTML ESCAPE
-=========================================================
-*/
+    activeCount.textContent = tools.length;
+
+    toolCount.textContent = tools.length;
+
+}
+
+/* ------------------------------------------------------------------
+   ESCAPE
+------------------------------------------------------------------ */
 
 function escapeHTML(value){
 
@@ -1662,73 +2794,351 @@ function escapeHTML(value){
 
 }
 
+/* ------------------------------------------------------------------
+   OPEN REAL TOOL
+------------------------------------------------------------------ */
 
-/*
-=========================================================
-VERIFY FILE LIST
-=========================================================
+function openTool(id){
 
-This only verifies the master configuration,
-not the remote server.
+    const tool =
+        tools.find(
+            item => item.id === Number(id)
+        );
 
-Expected = 50.
-=========================================================
-*/
+    if(!tool){
+        showToast("Tool configuration not found.");
+        return;
+    }
 
-console.info(
-    "50 AI TOOL KIT loaded:",
-    TOOLS.length,
-    "tools"
-);
+    const url =
+        toolURL(tool.file);
 
-if(TOOLS.length !== 50){
+    /*
+     * Direct navigation.
+     *
+     * This means the actual HTML file stored in:
+     *
+     * ./tools/
+     *
+     * is opened.
+     *
+     * No cloned UI.
+     * No iframe.
+     * No API.
+     * No dummy implementation.
+     */
 
-    console.error(
-        "Tool configuration error. Expected 50 tools."
-    );
+    window.location.assign(url);
 
 }
 
+/* ------------------------------------------------------------------
+   FAVORITE
+------------------------------------------------------------------ */
 
-/*
-=========================================================
-INITIAL RENDER
-=========================================================
-*/
+function toggleFavorite(id){
 
-renderTools();
+    id = Number(id);
 
+    if(state.favorites.has(id)){
+        state.favorites.delete(id);
+        showToast("Removed from favorites.");
+    }else{
+        state.favorites.add(id);
+        showToast("Added to favorites.");
+    }
 
-/*
-=========================================================
-OPTIONAL LAST TOOL LOG
-=========================================================
-*/
+    saveFavorites();
+    render();
 
-try{
+}
 
-    const last =
-        localStorage.getItem(
-            "50-ai-tool-kit:last-tool"
+/* ------------------------------------------------------------------
+   EVENTS
+------------------------------------------------------------------ */
+
+grid.addEventListener("click",event => {
+
+    const launch =
+        event.target.closest("[data-launch]");
+
+    if(launch){
+
+        openTool(
+            launch.dataset.launch
         );
 
-    if(last){
+        return;
+    }
 
-        console.info(
-            "Last opened tool:",
-            JSON.parse(last)
+    const favorite =
+        event.target.closest("[data-favorite]");
+
+    if(favorite){
+
+        toggleFavorite(
+            favorite.dataset.favorite
         );
 
     }
 
-}catch(error){
+});
 
-    console.warn(
-        "Could not read last tool:",
-        error
+searchInput.addEventListener(
+    "input",
+    event => {
+
+        state.query =
+            event.target.value;
+
+        render();
+
+    }
+);
+
+document.querySelectorAll(
+    ".filter-btn"
+).forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            document.querySelectorAll(
+                ".filter-btn"
+            ).forEach(item =>
+                item.classList.remove("active")
+            );
+
+            button.classList.add("active");
+
+            state.category =
+                button.dataset.filter;
+
+            state.favoritesOnly = false;
+
+            render();
+
+        }
     );
 
+});
+
+document.getElementById(
+    "favoritesBtn"
+).addEventListener(
+    "click",
+    () => {
+
+        state.favoritesOnly =
+            !state.favoritesOnly;
+
+        if(state.favoritesOnly){
+
+            document.querySelectorAll(
+                ".filter-btn"
+            ).forEach(item =>
+                item.classList.remove("active")
+            );
+
+            showToast(
+                "Showing favorite tools."
+            );
+
+        }else{
+
+            document.querySelector(
+                '[data-filter="all"]'
+            ).classList.add("active");
+
+            state.category = "all";
+
+        }
+
+        render();
+
+    }
+);
+
+document.getElementById(
+    "topSearchBtn"
+).addEventListener(
+    "click",
+    () => {
+
+        document.getElementById(
+            "toolSearchArea"
+        ).scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+        setTimeout(
+            () => searchInput.focus(),
+            350
+        );
+
+    }
+);
+
+/* ------------------------------------------------------------------
+   KEYBOARD SHORTCUT
+------------------------------------------------------------------ */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "/" &&
+            document.activeElement !== searchInput
+        ){
+
+            event.preventDefault();
+
+            searchInput.focus();
+
+        }
+
+        if(event.key === "Escape"){
+
+            searchInput.value = "";
+            state.query = "";
+
+            render();
+
+        }
+
+    }
+);
+
+/* ------------------------------------------------------------------
+   TOAST
+------------------------------------------------------------------ */
+
+let toastTimer;
+
+function showToast(message){
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(
+            () => toast.classList.remove("show"),
+            2200
+        );
+
 }
+
+/* ------------------------------------------------------------------
+   TOOL HEALTH
+   This checks only URL configuration format.
+   It does NOT pretend that a missing file exists.
+------------------------------------------------------------------ */
+
+function validateToolManifest(){
+
+    const uniqueIds =
+        new Set(tools.map(tool => tool.id));
+
+    const uniqueFiles =
+        new Set(tools.map(tool => tool.file));
+
+    const valid =
+        tools.length === 50 &&
+        uniqueIds.size === 50 &&
+        uniqueFiles.size === 50 &&
+        tools.every(
+            tool =>
+                tool.file &&
+                tool.file.toLowerCase().endsWith(".html")
+        );
+
+    if(valid){
+
+        healthTools.textContent = "50 READY";
+        healthProgress.style.width = "100%";
+
+    }else{
+
+        healthTools.textContent =
+            `${tools.length} CONFIGURED`;
+
+        healthProgress.style.width =
+            `${Math.min(
+                100,
+                tools.length / 50 * 100
+            )}%`;
+
+    }
+
+}
+
+/* ------------------------------------------------------------------
+   SEO: dynamic browser title based on current query/category
+------------------------------------------------------------------ */
+
+function updateDocumentTitle(){
+
+    if(state.query){
+
+        document.title =
+            `${state.query} | 50 AI TOOL KIT`;
+
+        return;
+
+    }
+
+    if(
+        state.category &&
+        state.category !== "all"
+    ){
+
+        const label =
+            state.category
+                .charAt(0)
+                .toUpperCase() +
+            state.category.slice(1);
+
+        document.title =
+            `${label} AI Tools | 50 AI TOOL KIT`;
+
+        return;
+
+    }
+
+    document.title =
+        "50 AI Prompt Engineering Tools | AI Tool Kit";
+
+}
+
+/* Update title whenever filtering changes */
+const originalRender = render;
+
+window.renderTools = function(){
+
+    originalRender();
+    updateDocumentTitle();
+
+};
+
+/* ------------------------------------------------------------------
+   PATCH FILTER / SEARCH RENDER CALLS
+------------------------------------------------------------------ */
+
+const originalSearchHandler =
+    searchInput.oninput;
+
+/* ------------------------------------------------------------------
+   INIT
+------------------------------------------------------------------ */
+
+loadFavorites();
+render();
+validateToolManifest();
 
 </script>
 
